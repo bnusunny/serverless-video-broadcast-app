@@ -185,7 +185,7 @@
                 "S3Bucket": {
                   "Ref": "ServerlessDeploymentBucket"
                 },
-                "S3Key": "serverless/video-broadcast/dev/1526719510181-2018-05-19T08:45:10.181Z/video-broadcast.zip"
+                "S3Key": "serverless/video-broadcast/dev/1526729053077-2018-05-19T11:24:13.077Z/video-broadcast.zip"
               },
               "FunctionName": "video-broadcast-dev-get-user-profile",
               "Handler": "user-profile/index.handler",
@@ -209,14 +209,14 @@
               "IamRoleLambdaExecution"
             ]
           },
-          "GetDashuserDashprofileLambdaVersionO13jyTAiSDYS3BQPvpBSP09xXVjzJBYitDqYF70og": {
+          "GetDashuserDashprofileLambdaVersion88tJMIkuT6z0mFymaWpT6oWm1X5prr1khn6GacRig": {
             "Type": "AWS::Lambda::Version",
             "DeletionPolicy": "Retain",
             "Properties": {
               "FunctionName": {
                 "Ref": "GetDashuserDashprofileLambdaFunction"
               },
-              "CodeSha256": "13YroaxGH8YEh9n+jf9pb1RaXNScqIR38e3HW08NbM0="
+              "CodeSha256": "j9COF/pP7jXDKSyzttQNQeg3EOlb33Dgt6uml4//wZU="
             }
           },
           "CustomDashauthorizerLambdaFunction": {
@@ -226,7 +226,7 @@
                 "S3Bucket": {
                   "Ref": "ServerlessDeploymentBucket"
                 },
-                "S3Key": "serverless/video-broadcast/dev/1526719510181-2018-05-19T08:45:10.181Z/video-broadcast.zip"
+                "S3Key": "serverless/video-broadcast/dev/1526729053077-2018-05-19T11:24:13.077Z/video-broadcast.zip"
               },
               "FunctionName": "video-broadcast-dev-custom-authorizer",
               "Handler": "custom-authorizer/index.handler",
@@ -238,21 +238,26 @@
                 ]
               },
               "Runtime": "nodejs6.10",
-              "Timeout": 6
+              "Timeout": 6,
+              "Environment": {
+                "Variables": {
+                  "AUTH0_DOMAIN": "harold-mb.auth0.com"
+                }
+              }
             },
             "DependsOn": [
               "CustomDashauthorizerLogGroup",
               "IamRoleLambdaExecution"
             ]
           },
-          "CustomDashauthorizerLambdaVersionATjhxTMMv25ly13gDQSMjLiz8ZjvqvjtqLccjnCGI": {
+          "CustomDashauthorizerLambdaVersion7Pc2m8g5PV0BvA2vWuHCFDCHHkNsQOAE91YLR8IHc": {
             "Type": "AWS::Lambda::Version",
             "DeletionPolicy": "Retain",
             "Properties": {
               "FunctionName": {
                 "Ref": "CustomDashauthorizerLambdaFunction"
               },
-              "CodeSha256": "13YroaxGH8YEh9n+jf9pb1RaXNScqIR38e3HW08NbM0="
+              "CodeSha256": "j9COF/pP7jXDKSyzttQNQeg3EOlb33Dgt6uml4//wZU="
             }
           },
           "TranscodeDashvideoLambdaFunction": {
@@ -262,7 +267,7 @@
                 "S3Bucket": {
                   "Ref": "ServerlessDeploymentBucket"
                 },
-                "S3Key": "serverless/video-broadcast/dev/1526719510181-2018-05-19T08:45:10.181Z/video-broadcast.zip"
+                "S3Key": "serverless/video-broadcast/dev/1526729053077-2018-05-19T11:24:13.077Z/video-broadcast.zip"
               },
               "FunctionName": "video-broadcast-dev-transcode-video",
               "Handler": "transcode-video-firebase-enabled/index.handler",
@@ -278,7 +283,7 @@
               "Environment": {
                 "Variables": {
                   "DATABASE_URL": "https://harold-mb.firebaseio.com/",
-                  "ELASTIC_TRANSCODER_PIPELINE_ID": "1526379306887-6f66we",
+                  "ELASTIC_TRANSCODER_PIPELINE_ID": "1526726798680-bq9661",
                   "ELASTIC_TRANSCODER_REGION": "us-east-1",
                   "SERVICE_ACCOUNT": "harold-mb-key.json"
                 }
@@ -289,14 +294,14 @@
               "IamRoleLambdaExecution"
             ]
           },
-          "TranscodeDashvideoLambdaVersionb9juJo4lqcfSLGIjM7n4xqIfIwZyZ7F3ja5UWvn4": {
+          "TranscodeDashvideoLambdaVersion8zINJIcDBHvlAOHQMAV4bj0kGpJE6gdV4jK42KUMoY": {
             "Type": "AWS::Lambda::Version",
             "DeletionPolicy": "Retain",
             "Properties": {
               "FunctionName": {
                 "Ref": "TranscodeDashvideoLambdaFunction"
               },
-              "CodeSha256": "13YroaxGH8YEh9n+jf9pb1RaXNScqIR38e3HW08NbM0="
+              "CodeSha256": "j9COF/pP7jXDKSyzttQNQeg3EOlb33Dgt6uml4//wZU="
             }
           },
           "GetDashuploadDashpolicyLambdaFunction": {
@@ -306,7 +311,7 @@
                 "S3Bucket": {
                   "Ref": "ServerlessDeploymentBucket"
                 },
-                "S3Key": "serverless/video-broadcast/dev/1526719510181-2018-05-19T08:45:10.181Z/video-broadcast.zip"
+                "S3Key": "serverless/video-broadcast/dev/1526729053077-2018-05-19T11:24:13.077Z/video-broadcast.zip"
               },
               "FunctionName": "video-broadcast-dev-get-upload-policy",
               "Handler": "create-s3-upload-policy-document/index.handler",
@@ -321,8 +326,8 @@
               "Timeout": 6,
               "Environment": {
                 "Variables": {
-                  "ACCESS_KEY_ID": "AKIAJMJS2MELCMAHSHHA",
-                  "SECRET_ACCESS_KEY": "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",
+                  "ACCESS_KEY_ID": "AKIAI5L5AC35GAYKC43Q",
+                  "SECRET_ACCESS_KEY": "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",
                   "UPLOAD_BUCKET": "video-upload-wezvqwefqef",
                   "UPLOAD_URI": "https://s3.amazonaws.com"
                 }
@@ -333,14 +338,14 @@
               "IamRoleLambdaExecution"
             ]
           },
-          "GetDashuploadDashpolicyLambdaVersiondTCrIjvBzC1iudDXZeAyXg3LRQHQeU6dq6DnmpyOYto": {
+          "GetDashuploadDashpolicyLambdaVersionwomDRsylRZrs9Fqgh95FRuVu0GSpq4tn9we1IcMM": {
             "Type": "AWS::Lambda::Version",
             "DeletionPolicy": "Retain",
             "Properties": {
               "FunctionName": {
                 "Ref": "GetDashuploadDashpolicyLambdaFunction"
               },
-              "CodeSha256": "13YroaxGH8YEh9n+jf9pb1RaXNScqIR38e3HW08NbM0="
+              "CodeSha256": "j9COF/pP7jXDKSyzttQNQeg3EOlb33Dgt6uml4//wZU="
             }
           },
           "PushDashtranscodedDashurlDashtoDashfirebaseLambdaFunction": {
@@ -350,7 +355,7 @@
                 "S3Bucket": {
                   "Ref": "ServerlessDeploymentBucket"
                 },
-                "S3Key": "serverless/video-broadcast/dev/1526719510181-2018-05-19T08:45:10.181Z/video-broadcast.zip"
+                "S3Key": "serverless/video-broadcast/dev/1526729053077-2018-05-19T11:24:13.077Z/video-broadcast.zip"
               },
               "FunctionName": "video-broadcast-dev-push-transcoded-url-to-firebase",
               "Handler": "push-transcoded-url-to-firebase/index.handler",
@@ -366,7 +371,7 @@
               "Environment": {
                 "Variables": {
                   "DATABASE_URL": "https://harold-mb.firebaseio.com/",
-                  "S3_TRANSCODED_BUCKET_URL": "https://s3.amazonaws.com/harold-mb2-transcoded",
+                  "S3_TRANSCODED_BUCKET_URL": "https://s3.amazonaws.com/video-transcoded-qezsdqwerqwr",
                   "SERVICE_ACCOUNT": "harold-mb-key.json"
                 }
               }
@@ -376,14 +381,14 @@
               "IamRoleLambdaExecution"
             ]
           },
-          "PushDashtranscodedDashurlDashtoDashfirebaseLambdaVersionDOZpcPd5y1MjXn54moFokuZgqroDDJZ5UtCpZh9f3YQ": {
+          "PushDashtranscodedDashurlDashtoDashfirebaseLambdaVersionGY0yOYJx7B3rnOMxhE71lZ0hjoWQsu5CTW0tbqyHdo": {
             "Type": "AWS::Lambda::Version",
             "DeletionPolicy": "Retain",
             "Properties": {
               "FunctionName": {
                 "Ref": "PushDashtranscodedDashurlDashtoDashfirebaseLambdaFunction"
               },
-              "CodeSha256": "13YroaxGH8YEh9n+jf9pb1RaXNScqIR38e3HW08NbM0="
+              "CodeSha256": "j9COF/pP7jXDKSyzttQNQeg3EOlb33Dgt6uml4//wZU="
             }
           },
           "S3BucketVideouploadwezvqwefqef": {
@@ -768,7 +773,7 @@
               "Type": "TOKEN"
             }
           },
-          "ApiGatewayDeployment1526719510527": {
+          "ApiGatewayDeployment1526729053556": {
             "Type": "AWS::ApiGateway::Deployment",
             "Properties": {
               "RestApiId": {
@@ -927,31 +932,31 @@
           "GetDashuserDashprofileLambdaFunctionQualifiedArn": {
             "Description": "Current Lambda function version",
             "Value": {
-              "Ref": "GetDashuserDashprofileLambdaVersionO13jyTAiSDYS3BQPvpBSP09xXVjzJBYitDqYF70og"
+              "Ref": "GetDashuserDashprofileLambdaVersion88tJMIkuT6z0mFymaWpT6oWm1X5prr1khn6GacRig"
             }
           },
           "CustomDashauthorizerLambdaFunctionQualifiedArn": {
             "Description": "Current Lambda function version",
             "Value": {
-              "Ref": "CustomDashauthorizerLambdaVersionATjhxTMMv25ly13gDQSMjLiz8ZjvqvjtqLccjnCGI"
+              "Ref": "CustomDashauthorizerLambdaVersion7Pc2m8g5PV0BvA2vWuHCFDCHHkNsQOAE91YLR8IHc"
             }
           },
           "TranscodeDashvideoLambdaFunctionQualifiedArn": {
             "Description": "Current Lambda function version",
             "Value": {
-              "Ref": "TranscodeDashvideoLambdaVersionb9juJo4lqcfSLGIjM7n4xqIfIwZyZ7F3ja5UWvn4"
+              "Ref": "TranscodeDashvideoLambdaVersion8zINJIcDBHvlAOHQMAV4bj0kGpJE6gdV4jK42KUMoY"
             }
           },
           "GetDashuploadDashpolicyLambdaFunctionQualifiedArn": {
             "Description": "Current Lambda function version",
             "Value": {
-              "Ref": "GetDashuploadDashpolicyLambdaVersiondTCrIjvBzC1iudDXZeAyXg3LRQHQeU6dq6DnmpyOYto"
+              "Ref": "GetDashuploadDashpolicyLambdaVersionwomDRsylRZrs9Fqgh95FRuVu0GSpq4tn9we1IcMM"
             }
           },
           "PushDashtranscodedDashurlDashtoDashfirebaseLambdaFunctionQualifiedArn": {
             "Description": "Current Lambda function version",
             "Value": {
-              "Ref": "PushDashtranscodedDashurlDashtoDashfirebaseLambdaVersionDOZpcPd5y1MjXn54moFokuZgqroDDJZ5UtCpZh9f3YQ"
+              "Ref": "PushDashtranscodedDashurlDashtoDashfirebaseLambdaVersionGY0yOYJx7B3rnOMxhE71lZ0hjoWQsu5CTW0tbqyHdo"
             }
           },
           "ServiceEndpoint": {
@@ -992,6 +997,10 @@
         }
       },
       "vpc": {}
+    },
+    "custom": {
+      "upload_bucket": "video-upload-wezvqwefqef",
+      "transcoded_bucket": "video-transcoded-qezsdqwerqwr"
     },
     "functions": {
       "get-user-profile": {
@@ -1051,6 +1060,9 @@
       },
       "custom-authorizer": {
         "handler": "custom-authorizer/index.handler",
+        "environment": {
+          "AUTH0_DOMAIN": "harold-mb.auth0.com"
+        },
         "events": [],
         "name": "video-broadcast-dev-custom-authorizer",
         "package": {},
@@ -1068,7 +1080,7 @@
         ],
         "environment": {
           "DATABASE_URL": "https://harold-mb.firebaseio.com/",
-          "ELASTIC_TRANSCODER_PIPELINE_ID": "1526379306887-6f66we",
+          "ELASTIC_TRANSCODER_PIPELINE_ID": "1526726798680-bq9661",
           "ELASTIC_TRANSCODER_REGION": "us-east-1",
           "SERVICE_ACCOUNT": "harold-mb-key.json"
         },
@@ -1125,8 +1137,8 @@
           }
         ],
         "environment": {
-          "ACCESS_KEY_ID": "AKIAJMJS2MELCMAHSHHA",
-          "SECRET_ACCESS_KEY": "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",
+          "ACCESS_KEY_ID": "AKIAI5L5AC35GAYKC43Q",
+          "SECRET_ACCESS_KEY": "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",
           "UPLOAD_BUCKET": "video-upload-wezvqwefqef",
           "UPLOAD_URI": "https://s3.amazonaws.com"
         },
@@ -1146,7 +1158,7 @@
         ],
         "environment": {
           "DATABASE_URL": "https://harold-mb.firebaseio.com/",
-          "S3_TRANSCODED_BUCKET_URL": "https://s3.amazonaws.com/harold-mb2-transcoded",
+          "S3_TRANSCODED_BUCKET_URL": "https://s3.amazonaws.com/video-transcoded-qezsdqwerqwr",
           "SERVICE_ACCOUNT": "harold-mb-key.json"
         },
         "name": "video-broadcast-dev-push-transcoded-url-to-firebase",
@@ -1181,7 +1193,7 @@
     "artifact": "/Users/sunhua/Documents/Projects/github.com/bnusunny/serverless-video-broadcast-app/lambda/.serverless/video-broadcast.zip"
   },
   "package": {
-    "artifactDirectoryName": "serverless/video-broadcast/dev/1526719510181-2018-05-19T08:45:10.181Z",
+    "artifactDirectoryName": "serverless/video-broadcast/dev/1526729053077-2018-05-19T11:24:13.077Z",
     "artifact": "video-broadcast.zip"
   }
 }

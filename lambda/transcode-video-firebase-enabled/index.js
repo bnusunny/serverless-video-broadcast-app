@@ -35,8 +35,16 @@ const generateTranscoderParams = (sourceKey, outputKey, transcoderPipelineID) =>
         },
         Outputs: [
             {
-                Key: outputKey + '-web-480p' + '.mp4',
-                PresetId: '1351620000001-000020' //480p 16:9 format
+                Key: outputKey + '-1080p' + '.mp4',
+                PresetId: '1351620000001-000001' //Generic 1080p
+            },
+            {
+                Key: outputKey + '-720p' + '.mp4',
+                PresetId: '1351620000001-000010' //Generic 720p
+            },
+            {
+                Key: outputKey + '-web-720p' + '.mp4',
+                PresetId: '1351620000001-100070' //Web Friendly 720p
             }
         ]
     };

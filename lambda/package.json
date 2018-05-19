@@ -13,6 +13,6 @@
     "jsonwebtoken": "^5.7.0",
     "request": "^2.86.0",
     "request-promise": "^4.2.2",
-    "firebase": "^3.2.1"
+    "firebase": "~3.2.1"
   }
 }

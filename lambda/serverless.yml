@@ -1,5 +1,9 @@
 service: video-broadcast
 
+custom: 
+  upload_bucket: video-upload-wezvqwefqef
+  transcoded_bucket: video-transcoded-qezsdqwerqwr
+
 provider:
   name: aws
   runtime: nodejs6.10
@@ -47,16 +51,18 @@ functions:
 
   custom-authorizer:
     handler: custom-authorizer/index.handler
+    environment:
+      AUTH0_DOMAIN: harold-mb.auth0.com   
 
   transcode-video:
     handler: transcode-video-firebase-enabled/index.handler
     events:
-      - s3:
-          bucket: video-upload-wezvqwefqef
+      - s3: 
+          bucket: ${self:custom.upload_bucket}
           event: s3:ObjectCreated:*
     environment: 
       DATABASE_URL: https://harold-mb.firebaseio.com/
-      ELASTIC_TRANSCODER_PIPELINE_ID: 1526379306887-6f66we
+      ELASTIC_TRANSCODER_PIPELINE_ID: 1526726798680-bq9661
       ELASTIC_TRANSCODER_REGION: us-east-1
       SERVICE_ACCOUNT: harold-mb-key.json
 
@@ -77,20 +83,20 @@ functions:
             name: custom-authorizer
             identitySource: method.request.header.Authorization
     environment:
-      ACCESS_KEY_ID: AKIAJMJS2MELCMAHSHHA
-      SECRET_ACCESS_KEY: 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
-      UPLOAD_BUCKET: video-upload-wezvqwefqef
+      ACCESS_KEY_ID: AKIAI5L5AC35GAYKC43Q
+      SECRET_ACCESS_KEY: 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
+      UPLOAD_BUCKET: ${self:custom.upload_bucket}
       UPLOAD_URI: https://s3.amazonaws.com
 
   push-transcoded-url-to-firebase: 
     handler: push-transcoded-url-to-firebase/index.handler
     events:
       - s3: 
-          bucket: video-transcoded-qezsdqwerqwr
+          bucket: ${self:custom.transcoded_bucket}
           event: s3:ObjectCreated:*
     environment: 
       DATABASE_URL: https://harold-mb.firebaseio.com/
-      S3_TRANSCODED_BUCKET_URL: https://s3.amazonaws.com/harold-mb2-transcoded
+      S3_TRANSCODED_BUCKET_URL: https://s3.amazonaws.com/${self:custom.transcoded_bucket}
       SERVICE_ACCOUNT: harold-mb-key.json    
 
 resources:
@@ -98,7 +104,7 @@ resources:
     S3BucketPermissions:
       Type: AWS::S3::BucketPolicy
       Properties:
-        Bucket: video-transcoded-qezsdqwerqwr
+        Bucket: ${self:custom.transcoded_bucket}
         PolicyDocument:
           Statement:
             - Principal: "*"
@@ -106,4 +112,4 @@ resources:
                 - s3:GetObject
               Effect: Allow
               Sid: "AddPerm"
-              Resource: arn:aws:s3:::video-transcoded-qezsdqwerqwr/*
+              Resource: arn:aws:s3:::${self:custom.transcoded_bucket}/*
