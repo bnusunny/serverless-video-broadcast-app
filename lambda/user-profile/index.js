@@ -1,11 +1,6 @@
 'use strict';
 
 /**
- * Created by Peter Sbarski
- * Updated by Mike Chambers
- * Updated by Julian Pittas
- * Last Updated: 27/02/2018
- *
  * Required Env Vars:
  * AUTH0_DOMAIN
  */
