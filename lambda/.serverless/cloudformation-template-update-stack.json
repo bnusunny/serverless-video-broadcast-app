@@ -132,9 +132,23 @@
                     "elastictranscoder:*Preset",
                     "s3:List*",
                     "iam:List*",
-                    "sns:List*"
+                    "sns:List*",
+                    "dynamodb:DescribeStream",
+                    "dynamodb:GetRecords",
+                    "dynamodb:GetShardIterator",
+                    "dynamodb:ListStreams",
+                    "logs:CreateLogGroup",
+                    "logs:CreateLogStream",
+                    "logs:PutLogEvents"
                   ],
                   "Resource": "*"
+                },
+                {
+                  "Effect": "Allow",
+                  "Action": [
+                    "dynamodb:PutItem"
+                  ],
+                  "Resource": "arn:aws:dynamodb:us-east-1:373534280245:table/Videos"
                 }
               ]
             }
@@ -161,7 +175,7 @@
           "S3Bucket": {
             "Ref": "ServerlessDeploymentBucket"
           },
-          "S3Key": "serverless/video-broadcast/dev/1526729053077-2018-05-19T11:24:13.077Z/video-broadcast.zip"
+          "S3Key": "serverless/video-broadcast/dev/1526742692305-2018-05-19T15:11:32.305Z/video-broadcast.zip"
         },
         "FunctionName": "video-broadcast-dev-get-user-profile",
         "Handler": "user-profile/index.handler",
@@ -172,7 +186,7 @@
             "Arn"
           ]
         },
-        "Runtime": "nodejs6.10",
+        "Runtime": "nodejs8.10",
         "Timeout": 6,
         "Environment": {
           "Variables": {
@@ -185,14 +199,14 @@
         "IamRoleLambdaExecution"
       ]
     },
-    "GetDashuserDashprofileLambdaVersion88tJMIkuT6z0mFymaWpT6oWm1X5prr1khn6GacRig": {
+    "GetDashuserDashprofileLambdaVersionEWOPYI7226ohJRnBQBAsSnTUjaQBMOqM9y6M3OiWHw": {
       "Type": "AWS::Lambda::Version",
       "DeletionPolicy": "Retain",
       "Properties": {
         "FunctionName": {
           "Ref": "GetDashuserDashprofileLambdaFunction"
         },
-        "CodeSha256": "j9COF/pP7jXDKSyzttQNQeg3EOlb33Dgt6uml4//wZU="
+        "CodeSha256": "3OD72pYf2tUcZpnEwzrAbsznQIyGVhFE0dtXbVoaE6c="
       }
     },
     "CustomDashauthorizerLambdaFunction": {
@@ -202,7 +216,7 @@
           "S3Bucket": {
             "Ref": "ServerlessDeploymentBucket"
           },
-          "S3Key": "serverless/video-broadcast/dev/1526729053077-2018-05-19T11:24:13.077Z/video-broadcast.zip"
+          "S3Key": "serverless/video-broadcast/dev/1526742692305-2018-05-19T15:11:32.305Z/video-broadcast.zip"
         },
         "FunctionName": "video-broadcast-dev-custom-authorizer",
         "Handler": "custom-authorizer/index.handler",
@@ -213,7 +227,7 @@
             "Arn"
           ]
         },
-        "Runtime": "nodejs6.10",
+        "Runtime": "nodejs8.10",
         "Timeout": 6,
         "Environment": {
           "Variables": {
@@ -226,14 +240,14 @@
         "IamRoleLambdaExecution"
       ]
     },
-    "CustomDashauthorizerLambdaVersion7Pc2m8g5PV0BvA2vWuHCFDCHHkNsQOAE91YLR8IHc": {
+    "CustomDashauthorizerLambdaVersionLoAKAc2FUikm6dgIbmGhXuqekDiJeYf5DcskszRYGqI": {
       "Type": "AWS::Lambda::Version",
       "DeletionPolicy": "Retain",
       "Properties": {
         "FunctionName": {
           "Ref": "CustomDashauthorizerLambdaFunction"
         },
-        "CodeSha256": "j9COF/pP7jXDKSyzttQNQeg3EOlb33Dgt6uml4//wZU="
+        "CodeSha256": "3OD72pYf2tUcZpnEwzrAbsznQIyGVhFE0dtXbVoaE6c="
       }
     },
     "TranscodeDashvideoLambdaFunction": {
@@ -243,10 +257,10 @@
           "S3Bucket": {
             "Ref": "ServerlessDeploymentBucket"
           },
-          "S3Key": "serverless/video-broadcast/dev/1526729053077-2018-05-19T11:24:13.077Z/video-broadcast.zip"
+          "S3Key": "serverless/video-broadcast/dev/1526742692305-2018-05-19T15:11:32.305Z/video-broadcast.zip"
         },
         "FunctionName": "video-broadcast-dev-transcode-video",
-        "Handler": "transcode-video-firebase-enabled/index.handler",
+        "Handler": "transcode-video/index.handler",
         "MemorySize": 512,
         "Role": {
           "Fn::GetAtt": [
@@ -254,14 +268,12 @@
             "Arn"
           ]
         },
-        "Runtime": "nodejs6.10",
+        "Runtime": "nodejs8.10",
         "Timeout": 6,
         "Environment": {
           "Variables": {
-            "DATABASE_URL": "https://harold-mb.firebaseio.com/",
             "ELASTIC_TRANSCODER_PIPELINE_ID": "1526726798680-bq9661",
-            "ELASTIC_TRANSCODER_REGION": "us-east-1",
-            "SERVICE_ACCOUNT": "harold-mb-key.json"
+            "ELASTIC_TRANSCODER_REGION": "us-east-1"
           }
         }
       },
@@ -270,14 +282,14 @@
         "IamRoleLambdaExecution"
       ]
     },
-    "TranscodeDashvideoLambdaVersion8zINJIcDBHvlAOHQMAV4bj0kGpJE6gdV4jK42KUMoY": {
+    "TranscodeDashvideoLambdaVersionWsLBtfHpKXUjJYKfypjVBGoRJrO3UjSm7brceY": {
       "Type": "AWS::Lambda::Version",
       "DeletionPolicy": "Retain",
       "Properties": {
         "FunctionName": {
           "Ref": "TranscodeDashvideoLambdaFunction"
         },
-        "CodeSha256": "j9COF/pP7jXDKSyzttQNQeg3EOlb33Dgt6uml4//wZU="
+        "CodeSha256": "3OD72pYf2tUcZpnEwzrAbsznQIyGVhFE0dtXbVoaE6c="
       }
     },
     "GetDashuploadDashpolicyLambdaFunction": {
@@ -287,7 +299,7 @@
           "S3Bucket": {
             "Ref": "ServerlessDeploymentBucket"
           },
-          "S3Key": "serverless/video-broadcast/dev/1526729053077-2018-05-19T11:24:13.077Z/video-broadcast.zip"
+          "S3Key": "serverless/video-broadcast/dev/1526742692305-2018-05-19T15:11:32.305Z/video-broadcast.zip"
         },
         "FunctionName": "video-broadcast-dev-get-upload-policy",
         "Handler": "create-s3-upload-policy-document/index.handler",
@@ -298,7 +310,7 @@
             "Arn"
           ]
         },
-        "Runtime": "nodejs6.10",
+        "Runtime": "nodejs8.10",
         "Timeout": 6,
         "Environment": {
           "Variables": {
@@ -314,14 +326,14 @@
         "IamRoleLambdaExecution"
       ]
     },
-    "GetDashuploadDashpolicyLambdaVersionwomDRsylRZrs9Fqgh95FRuVu0GSpq4tn9we1IcMM": {
+    "GetDashuploadDashpolicyLambdaVersionCoAVDkhiIN5NIF1lCNd0DipXFEAT5GFfBvkTMSnp6s": {
       "Type": "AWS::Lambda::Version",
       "DeletionPolicy": "Retain",
       "Properties": {
         "FunctionName": {
           "Ref": "GetDashuploadDashpolicyLambdaFunction"
         },
-        "CodeSha256": "j9COF/pP7jXDKSyzttQNQeg3EOlb33Dgt6uml4//wZU="
+        "CodeSha256": "3OD72pYf2tUcZpnEwzrAbsznQIyGVhFE0dtXbVoaE6c="
       }
     },
     "PushDashtranscodedDashurlDashtoDashfirebaseLambdaFunction": {
@@ -331,7 +343,7 @@
           "S3Bucket": {
             "Ref": "ServerlessDeploymentBucket"
           },
-          "S3Key": "serverless/video-broadcast/dev/1526729053077-2018-05-19T11:24:13.077Z/video-broadcast.zip"
+          "S3Key": "serverless/video-broadcast/dev/1526742692305-2018-05-19T15:11:32.305Z/video-broadcast.zip"
         },
         "FunctionName": "video-broadcast-dev-push-transcoded-url-to-firebase",
         "Handler": "push-transcoded-url-to-firebase/index.handler",
@@ -342,7 +354,7 @@
             "Arn"
           ]
         },
-        "Runtime": "nodejs6.10",
+        "Runtime": "nodejs8.10",
         "Timeout": 6,
         "Environment": {
           "Variables": {
@@ -357,14 +369,14 @@
         "IamRoleLambdaExecution"
       ]
     },
-    "PushDashtranscodedDashurlDashtoDashfirebaseLambdaVersionGY0yOYJx7B3rnOMxhE71lZ0hjoWQsu5CTW0tbqyHdo": {
+    "PushDashtranscodedDashurlDashtoDashfirebaseLambdaVersionlxV4ocbeIFSJx0awgJVdlRX3a8YNyoG1iyTihXDg4": {
       "Type": "AWS::Lambda::Version",
       "DeletionPolicy": "Retain",
       "Properties": {
         "FunctionName": {
           "Ref": "PushDashtranscodedDashurlDashtoDashfirebaseLambdaFunction"
         },
-        "CodeSha256": "j9COF/pP7jXDKSyzttQNQeg3EOlb33Dgt6uml4//wZU="
+        "CodeSha256": "3OD72pYf2tUcZpnEwzrAbsznQIyGVhFE0dtXbVoaE6c="
       }
     },
     "S3BucketVideouploadwezvqwefqef": {
@@ -749,7 +761,7 @@
         "Type": "TOKEN"
       }
     },
-    "ApiGatewayDeployment1526729053556": {
+    "ApiGatewayDeployment1526742692601": {
       "Type": "AWS::ApiGateway::Deployment",
       "Properties": {
         "RestApiId": {
@@ -908,31 +920,31 @@
     "GetDashuserDashprofileLambdaFunctionQualifiedArn": {
       "Description": "Current Lambda function version",
       "Value": {
-        "Ref": "GetDashuserDashprofileLambdaVersion88tJMIkuT6z0mFymaWpT6oWm1X5prr1khn6GacRig"
+        "Ref": "GetDashuserDashprofileLambdaVersionEWOPYI7226ohJRnBQBAsSnTUjaQBMOqM9y6M3OiWHw"
       }
     },
     "CustomDashauthorizerLambdaFunctionQualifiedArn": {
       "Description": "Current Lambda function version",
       "Value": {
-        "Ref": "CustomDashauthorizerLambdaVersion7Pc2m8g5PV0BvA2vWuHCFDCHHkNsQOAE91YLR8IHc"
+        "Ref": "CustomDashauthorizerLambdaVersionLoAKAc2FUikm6dgIbmGhXuqekDiJeYf5DcskszRYGqI"
       }
     },
     "TranscodeDashvideoLambdaFunctionQualifiedArn": {
       "Description": "Current Lambda function version",
       "Value": {
-        "Ref": "TranscodeDashvideoLambdaVersion8zINJIcDBHvlAOHQMAV4bj0kGpJE6gdV4jK42KUMoY"
+        "Ref": "TranscodeDashvideoLambdaVersionWsLBtfHpKXUjJYKfypjVBGoRJrO3UjSm7brceY"
       }
     },
     "GetDashuploadDashpolicyLambdaFunctionQualifiedArn": {
       "Description": "Current Lambda function version",
       "Value": {
-        "Ref": "GetDashuploadDashpolicyLambdaVersionwomDRsylRZrs9Fqgh95FRuVu0GSpq4tn9we1IcMM"
+        "Ref": "GetDashuploadDashpolicyLambdaVersionCoAVDkhiIN5NIF1lCNd0DipXFEAT5GFfBvkTMSnp6s"
       }
     },
     "PushDashtranscodedDashurlDashtoDashfirebaseLambdaFunctionQualifiedArn": {
       "Description": "Current Lambda function version",
       "Value": {
-        "Ref": "PushDashtranscodedDashurlDashtoDashfirebaseLambdaVersionGY0yOYJx7B3rnOMxhE71lZ0hjoWQsu5CTW0tbqyHdo"
+        "Ref": "PushDashtranscodedDashurlDashtoDashfirebaseLambdaVersionlxV4ocbeIFSJx0awgJVdlRX3a8YNyoG1iyTihXDg4"
       }
     },
     "ServiceEndpoint": {

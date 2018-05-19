@@ -6,7 +6,7 @@ custom:
 
 provider:
   name: aws
-  runtime: nodejs6.10
+  runtime: nodejs8.10
   stage: dev
   profile: global
   region: us-east-1
@@ -26,7 +26,18 @@ provider:
         - s3:List*
         - iam:List*
         - sns:List*
+        - dynamodb:DescribeStream
+        - dynamodb:GetRecords
+        - dynamodb:GetShardIterator
+        - dynamodb:ListStreams
+        - logs:CreateLogGroup
+        - logs:CreateLogStream
+        - logs:PutLogEvents
       Resource: "*"
+    - Effect: Allow
+      Action: 
+        - dynamodb:PutItem
+      Resource: "arn:aws:dynamodb:us-east-1:373534280245:table/Videos"
 
 
 functions:
@@ -55,16 +66,14 @@ functions:
       AUTH0_DOMAIN: harold-mb.auth0.com   
 
   transcode-video:
-    handler: transcode-video-firebase-enabled/index.handler
+    handler: transcode-video/index.handler
     events:
       - s3: 
           bucket: ${self:custom.upload_bucket}
           event: s3:ObjectCreated:*
     environment: 
-      DATABASE_URL: https://harold-mb.firebaseio.com/
       ELASTIC_TRANSCODER_PIPELINE_ID: 1526726798680-bq9661
       ELASTIC_TRANSCODER_REGION: us-east-1
-      SERVICE_ACCOUNT: harold-mb-key.json
 
   get-upload-policy: 
     handler: create-s3-upload-policy-document/index.handler
