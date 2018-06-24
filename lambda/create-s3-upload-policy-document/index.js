@@ -1,10 +1,6 @@
 'use strict';
 
 /**
- * Created by Peter Sbarski
- * Updated by Mike Chambers
- * Updated by Julian Pittas
- * Last Updated: 28/02/2018
  *
  * Required Env Vars:
  * UPLOAD_BUCKET
@@ -15,6 +11,7 @@
 
 const AWS = require('aws-sdk');
 const crypto = require('crypto');
+const jwt = require('jsonwebtoken');
 
 const s3 = new AWS.S3();
 
@@ -40,7 +37,7 @@ const generatePolicyDocument = (key, bucket)  => {
           {key: key},
           {bucket: bucket},
           {acl: 'private'},
-          ['starts-with', '$Content-Type', '']
+          ['starts-with', '$Content-Type', 'video/']
       ]
   };
 
@@ -65,12 +62,26 @@ const generateResponse = (status, message) => {
 };
 
 const handler = (event, context, callback) => {
+  // Get userid from idToken. 
+  const jwtToken = event.headers.Authorization && event.headers.Authorization.split(' ')[1]; 
+  let idToken = null; 
 
+  if (jwtToken) {
+    idToken = jwt.decode(jwtToken, {complete: true});
+    console.log(`idToken content: ${JSON.stringify(idToken)}`);
+  } else {
+    callback(new Error('Authorization header is missing.'));
+    return;
+  }
+
+  // Get the userId from idToken.
+  const userId = idToken.payload.sub;
+  
   // Get the filename from the query string parameters in the GET call
   const filename = decodeURI(event.queryStringParameters.filename);
   const directory = crypto.randomBytes(20).toString('hex');
 
-  const key = directory + '/' + filename;
+  const key = userId + '/' + directory + '/' + filename;
   const bucket = process.env.UPLOAD_BUCKET;
 
   const policyDocument = generatePolicyDocument(key, bucket);

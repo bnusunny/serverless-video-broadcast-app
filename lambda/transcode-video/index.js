@@ -20,7 +20,7 @@ const elasticTranscoder = new AWS.ElasticTranscoder({
 const generateTranscoderParams = (sourceKey, outputKey, transcoderPipelineID) => {
     const params = {
         PipelineId: transcoderPipelineID,
-        OutputKeyPrefix: outputKey + '/',
+        // OutputKeyPrefix: outputKey + '/',
         Input: {
             Key: sourceKey
         },
@@ -36,24 +36,35 @@ const generateTranscoderParams = (sourceKey, outputKey, transcoderPipelineID) =>
             {
                 Key: outputKey + '-web-720p' + '.mp4',
                 PresetId: '1351620000001-100070' //Web Friendly 720p
-            }
+            },
+            // {
+            //     Key: outputKey + '-hls-2m',
+            //     PresetId: '1351620000001-200015' //HLS Video - 2M 
+            // },
+            // {
+            //     Key: outputKey + '-hls-1m',
+            //     PresetId: '1351620000001-200035' //HLS Video - 1M
+            // },
         ]
     };
 
     return params;
 };
 
-const pushVideoEntryToDynamodb = async (key) => {
-    console.log("Adding video entry to Dynamodb at key: ", key); 
+const pushVideoEntryToDynamodb = async (uniqueKey, sourceKey, pipelineID) => {
+    console.log("Adding video entry to Dynamodb at key: ", uniqueKey); 
 
     const docClient = new AWS.DynamoDB.DocumentClient();
     
     let theVideoRecord = {
         TableName: 'Videos',
         Item: {
-            ID: key,
-            sort_key: `userid-${new Date().toISOString()}`,
-            transcoding: true
+            ID: uniqueKey,
+            transcoding: true,
+            sourceKey: sourceKey,
+            pipelineID: pipelineID,
+            userID: sourceKey.split("/")[0],
+            created_at: new Date().toISOString()
         }
     };
 
@@ -74,10 +85,10 @@ const handler = async (event, context, callback) => {
 
     //remove the extension
     const outputKey = sourceKey.split('.')[0];
-    console.log("Output key:", sourceKey);
+    console.log("Output key:", outputKey);
 
     // get the unique video key (the folder name)
-    const uniqueVideoKey = outputKey.split('/')[0];
+    const uniqueVideoKey = outputKey.split('/')[1];
 
     const params = generateTranscoderParams(sourceKey, outputKey, pipelineID);
 
@@ -85,7 +96,7 @@ const handler = async (event, context, callback) => {
         await elasticTranscoder.createJob(params).promise(); 
 
         console.log("Elastic transcoder job created successfully");
-        await pushVideoEntryToDynamodb(uniqueVideoKey);
+        await pushVideoEntryToDynamodb(uniqueVideoKey, key, pipelineID);
 
         callback(null, 'video is added');
     } catch (err) {

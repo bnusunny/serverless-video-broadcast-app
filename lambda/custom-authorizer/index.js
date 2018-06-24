@@ -58,6 +58,12 @@ const handler = (event, context, callback) => {
     	return;
     }
     const decodedToken = jwt.decode(jwtToken, {complete: true});
+    if (!decodedToken) {
+        console.log(`AuthorizationToken: ${JSON.stringify(event.authorizationToken)}`);
+        console.log(`jwtToken: ${JSON.stringify(jwtToken)}`);
+        callback('Could not decode id token');
+        return;
+    }
 
     const Auth0ApiBaseUrl = process.env.AUTH0_DOMAIN;
     if(!Auth0ApiBaseUrl) {

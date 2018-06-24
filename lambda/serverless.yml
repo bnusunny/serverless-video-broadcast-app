@@ -1,8 +1,12 @@
 service: video-broadcast
 
 custom: 
-  upload_bucket: video-upload-wezvqwefqef
-  transcoded_bucket: video-transcoded-qezsdqwerqwr
+  upload_bucket: video-upload-wezvqwefqef-${opt:stage, self:provider.stage}
+  transcoded_bucket: video-transcoded-qezsdqwerqwr-${opt:stage, self:provider.stage}
+  dlq_sns_arn: arn:aws:sns:us-east-1:373534280245:prod-alert
+  elastic_transcoder_pipelineid: 
+    dev: 1526726798680-bq9661
+    prod:   
 
 provider:
   name: aws
@@ -11,6 +15,7 @@ provider:
   profile: global
   region: us-east-1
   memorySize: 512
+  timeout: 30
   iamRoleStatements: 
     - Effect: Allow
       Action: 
@@ -28,8 +33,10 @@ provider:
         - sns:List*
         - dynamodb:DescribeStream
         - dynamodb:GetRecords
+        - dynamodb:GetItem
         - dynamodb:GetShardIterator
         - dynamodb:ListStreams
+        - dynamodb:Scan
         - logs:CreateLogGroup
         - logs:CreateLogStream
         - logs:PutLogEvents
@@ -38,11 +45,16 @@ provider:
       Action: 
         - dynamodb:PutItem
       Resource: "arn:aws:dynamodb:us-east-1:373534280245:table/Videos"
+    - Effect: Allow
+      Action: 
+        - sns:Publish
+      Resource: "arn:aws:sns:us-east-1:373534280245:prod-alert"
 
 
 functions:
   get-user-profile:
     handler: user-profile/index.handler
+    onError: ${self:custom.dlq_sns_arn}
     events:
       - http:
           path: user-profile
@@ -53,7 +65,7 @@ functions:
               querystrings:
                 accessToken: false
               headers:
-                authorization: false
+                Authorization: false
           authorizer:
             name: custom-authorizer
             identitySource: method.request.header.Authorization
@@ -62,21 +74,24 @@ functions:
 
   custom-authorizer:
     handler: custom-authorizer/index.handler
+    onError: ${self:custom.dlq_sns_arn}
     environment:
       AUTH0_DOMAIN: harold-mb.auth0.com   
 
   transcode-video:
     handler: transcode-video/index.handler
+    onError: ${self:custom.dlq_sns_arn}
     events:
       - s3: 
           bucket: ${self:custom.upload_bucket}
           event: s3:ObjectCreated:*
     environment: 
-      ELASTIC_TRANSCODER_PIPELINE_ID: 1526726798680-bq9661
+      ELASTIC_TRANSCODER_PIPELINE_ID: ${self:custom.elastic_transcoder_pipelineid.${opt:stage, self:provider.stage}}
       ELASTIC_TRANSCODER_REGION: us-east-1
 
   get-upload-policy: 
     handler: create-s3-upload-policy-document/index.handler
+    onError: ${self:custom.dlq_sns_arn}
     events: 
       - http:
           path: s3-policy-document
@@ -87,7 +102,7 @@ functions:
               querystrings:
                 accessToken: false
               headers:
-                authorization: false
+                Authorization: false
           authorizer:
             name: custom-authorizer
             identitySource: method.request.header.Authorization
@@ -97,16 +112,31 @@ functions:
       UPLOAD_BUCKET: ${self:custom.upload_bucket}
       UPLOAD_URI: https://s3.amazonaws.com
 
-  push-transcoded-url-to-firebase: 
-    handler: push-transcoded-url-to-firebase/index.handler
+  push-transcoded-url-to-db: 
+    handler: push-transcoded-url-to-db/index.handler
+    onError: ${self:custom.dlq_sns_arn}
     events:
-      - s3: 
-          bucket: ${self:custom.transcoded_bucket}
-          event: s3:ObjectCreated:*
+      - sns: arn:aws:sns:us-east-1:373534280245:video-transcode-complete
     environment: 
-      DATABASE_URL: https://harold-mb.firebaseio.com/
-      S3_TRANSCODED_BUCKET_URL: https://s3.amazonaws.com/${self:custom.transcoded_bucket}
-      SERVICE_ACCOUNT: harold-mb-key.json    
+      S3_TRANSCODED_BUCKET_URL: https://dit0x3orc1zbj.cloudfront.net
+
+  get-all-videos: 
+    handler: get-all-videos/index.handler 
+    onError: ${self:custom.dlq_sns_arn} 
+    events: 
+      - http:
+          path: all-videos
+          method: get
+          cors: true
+          request:
+            parameters:
+              querystrings:
+                accessToken: false
+              headers:
+                Authorization: false
+          authorizer:
+            name: custom-authorizer
+            identitySource: method.request.header.Authorization
 
 resources:
   Resources:

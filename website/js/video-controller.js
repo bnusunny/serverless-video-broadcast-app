@@ -14,7 +14,7 @@ var videoController = {
 
         this.data.config = config;
 
-        this.connectToFirebase();
+        this.connectToDynamoDB();
     },
     addVideoToScreen: function (videoId, videoObj) {
         // clone the template video element
@@ -54,7 +54,7 @@ var videoController = {
         }
 
         // set the video URL
-        videoElement.find('video').attr('src', videoObj.source);
+        videoElement.find('video').attr('src', videoObj.video_urls[0]);
     },
     getElementForVideo: function(videoId) {
         return $('#' + videoId);
@@ -101,5 +101,38 @@ var videoController = {
                 // update the video object on screen with the new video details from firebase
                 that.getElementForVideo(childSnapshot.key).remove();
             });
+    },
+    connectToDynamoDB: async function() {
+        const that = this;
+
+        const accessToken = localStorage.getItem('accessToken'); 
+        const idToken = localStorage.getItem('idToken');
+
+        if (!accessToken || !idToken) {
+            return;
+        }
+        
+        const getAllVideoUrl = that.data.config.apiBaseUrl + '/all-videos?accessToken=' + accessToken;
+
+        try {
+            const allVideoItems = await $.ajax({
+                url: getAllVideoUrl,
+                type: 'GET',
+                beforeSend: function (req) {
+                    req.setRequestHeader('Authorization', 'Bearer ' + idToken);
+                }
+            });
+
+            that.uiElements.loadingIndicator.hide();
+
+            for (let videoItem of allVideoItems.message.Items) {
+                that.addVideoToScreen(videoItem.ID, videoItem);
+            }
+    
+        } catch(err) {
+            console.log(err);
+            alert('faild to get video list.');
+        }
+
     }
 };
