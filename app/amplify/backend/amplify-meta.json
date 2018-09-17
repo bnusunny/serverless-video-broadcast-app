@@ -1,0 +1,106 @@
+{
+	"providers": {
+		"awscloudformation": {
+			"AuthRoleName": "app-20180910212614-authRole",
+			"UnauthRoleArn": "arn:aws:iam::373534280245:role/app-20180910212614-unauthRole",
+			"AuthRoleArn": "arn:aws:iam::373534280245:role/app-20180910212614-authRole",
+			"Region": "ap-northeast-1",
+			"DeploymentBucketName": "app-20180910212614-deployment",
+			"UnauthRoleName": "app-20180910212614-unauthRole",
+			"StackName": "app-20180910212614",
+			"StackId": "arn:aws:cloudformation:ap-northeast-1:373534280245:stack/app-20180910212614/44e84b40-b4fd-11e8-9338-503a369c8836"
+		}
+	},
+	"auth": {
+		"cognito774aead0": {
+			"service": "Cognito",
+			"providerPlugin": "awscloudformation",
+			"providerMetadata": {
+				"s3TemplateURL": "https://s3.amazonaws.com/app-20180910212614-deployment/amplify-cfn-templates/auth/cognito774aead0-cloudformation-template.yml",
+				"logicalId": "authcognito774aead0"
+			},
+			"lastPushTimeStamp": "2018-09-16T15:37:35.644Z",
+			"output": {
+				"AppClientSecret": "7beu2nmg59hvs6dsi0a9fd9i3k5kcrj00k16igahfq0sjca67tm",
+				"UserPoolId": "ap-northeast-1_P52GHiEQH",
+				"AppClientIDWeb": "79j2tb9sl2rptv6knhfhbcgg5k",
+				"AppClientID": "28049q99rtvemobpaiid5kb2r",
+				"IdentityPoolId": "ap-northeast-1:c110a18e-82a3-4505-ad92-3c508cc88d1c",
+				"IdentityPoolName": "cognito774aead0_identitypool_774aead0",
+				"UserPoolName": "cognito774aead0_userpool_774aead0"
+			},
+			"lastPushDirHash": "BHSkejydfBe5kjtYM+nZs4MpDQI="
+		}
+	},
+	"storage": {
+		"dynamoVideos": {
+			"service": "DynamoDB",
+			"providerPlugin": "awscloudformation",
+			"providerMetadata": {
+				"s3TemplateURL": "https://s3.amazonaws.com/app-20180910212614-deployment/amplify-cfn-templates/storage/dynamoVideos-cloudformation-template.json",
+				"logicalId": "storagedynamoVideos"
+			},
+			"lastPushTimeStamp": "2018-09-16T15:37:35.645Z",
+			"output": {
+				"PartitionKeyName": "ID",
+				"Region": "ap-northeast-1",
+				"Arn": "arn:aws:dynamodb:ap-northeast-1:373534280245:table/Videos",
+				"PartitionKeyType": "S",
+				"Name": "Videos"
+			},
+			"lastPushDirHash": "p1QHJwLkqocaZXQ59a2gUg7hoTc="
+		},
+		"s3Video": {
+			"service": "S3",
+			"providerPlugin": "awscloudformation",
+			"providerMetadata": {
+				"s3TemplateURL": "https://s3.amazonaws.com/app-20180910212614-deployment/amplify-cfn-templates/storage/s3-cloudformation-template.json",
+				"logicalId": "storages3Video"
+			},
+			"lastPushTimeStamp": "2018-09-16T15:37:35.652Z",
+			"output": {
+				"BucketName": "video-upload-qejsadfqwefadfafqwef-dev",
+				"Region": "ap-northeast-1"
+			},
+			"lastPushDirHash": "/HHCaEPMdNbXADiDe/nXmERilF4="
+		}
+	},
+	"api": {
+		"apiGetAllVideos": {
+			"service": "API Gateway",
+			"providerPlugin": "awscloudformation",
+			"dependsOn": [],
+			"providerMetadata": {
+				"s3TemplateURL": "https://s3.amazonaws.com/app-20180910212614-deployment/amplify-cfn-templates/api/apiGetAllVideos-cloudformation-template.json",
+				"logicalId": "apiapiGetAllVideos"
+			},
+			"lastPushTimeStamp": "2018-09-16T15:37:35.651Z",
+			"output": {
+				"ApiName": "apiGetAllVideos",
+				"RootUrl": "https://p6qirenmzj.execute-api.ap-northeast-1.amazonaws.com/Prod"
+			},
+			"lastPushDirHash": "K3cpeWS15Kzafwfb9nuhTRhqsko="
+		}
+	},
+	"hosting": {
+		"S3AndCloudFront": {
+			"service": "S3AndCloudFront",
+			"providerPlugin": "awscloudformation",
+			"providerMetadata": {
+				"s3TemplateURL": "https://s3.amazonaws.com/app-20180910212614-deployment/amplify-cfn-templates/hosting/template.json",
+				"logicalId": "hostingS3AndCloudFront"
+			},
+			"lastPushTimeStamp": "2018-09-16T15:37:35.652Z",
+			"output": {
+				"CloudFrontSecureURL": "https://dr8yjtnfa00ar.cloudfront.net",
+				"S3BucketSecureURL": "https://video-transcoded-yewnsdiqsdfq-dev.s3.amazonaws.com",
+				"WebsiteURL": "http://video-transcoded-yewnsdiqsdfq-dev.s3-website-ap-northeast-1.amazonaws.com",
+				"CloudFrontDistributionID": "E2H3O90T2814UK",
+				"Region": "ap-northeast-1",
+				"HostingBucketName": "video-transcoded-yewnsdiqsdfq-dev",
+				"CloudFrontDomainName": "dr8yjtnfa00ar.cloudfront.net"
+			},
+			"lastPushDirHash": "3lgMHAV8A058IbHuBVeGc0qPlSY="
+		}
+	}
+}

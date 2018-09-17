@@ -1,0 +1,9 @@
+{
+    "bucketName": "video-upload-qejsadfqwefadfafqwef-dev",
+    "authPolicyName": "s3_amplify_28a5b7a6",
+    "unauthPolicyName": "s3_amplify_28a5b7a6",
+    "authRoleName": "app-20180910212614-authRole",
+    "unauthRoleName": "app-20180910212614-unauthRole",
+    "authPermissions": "rw",
+    "unauthPermissions": ""
+}

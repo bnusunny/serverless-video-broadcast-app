@@ -1,0 +1,20 @@
+{
+    "projectName": "app",
+    "projectPath": "/Users/sunhua/Documents/Projects/github.com/bnusunny/serverless-video-broadcast-app/app",
+    "defaultEditor": "code",
+    "frontendHandler": {
+        "javascript": "/Users/sunhua/.nvm/versions/node/v8.11.1/lib/node_modules/@aws-amplify/cli/node_modules/amplify-frontend-javascript"
+    },
+    "javascript": {
+        "framework": "react-native",
+        "config": {
+            "SourceDir": "/",
+            "DistributionDir": "/",
+            "BuildCommand": "npm run-script build",
+            "StartCommand": "npm run-script start"
+        }
+    },
+    "providers": {
+        "awscloudformation": "/Users/sunhua/.nvm/versions/node/v8.11.1/lib/node_modules/@aws-amplify/cli/node_modules/amplify-provider-awscloudformation"
+    }
+}
