@@ -6,7 +6,7 @@
     },
     "provider": {
       "stage": "dev",
-      "region": "us-east-1",
+      "region": "ap-northeast-1",
       "variableSyntax": "\\${([ ~:a-zA-Z0-9._'\",\\-\\/\\(\\)]+?)}",
       "name": "aws",
       "runtime": "nodejs8.10",
@@ -49,14 +49,14 @@
           "Action": [
             "dynamodb:PutItem"
           ],
-          "Resource": "arn:aws:dynamodb:us-east-1:373534280245:table/Videos"
+          "Resource": "arn:aws:dynamodb:ap-northeast-1:373534280245:table/Videos"
         },
         {
           "Effect": "Allow",
           "Action": [
             "sns:Publish"
           ],
-          "Resource": "arn:aws:sns:us-east-1:373534280245:prod-alert"
+          "Resource": "arn:aws:sns:ap-northeast-1:373534280245:prod-alert"
         }
       ],
       "versionFunctions": true,
@@ -208,7 +208,7 @@
                           "sns:Publish"
                         ],
                         "Resource": [
-                          "arn:aws:sns:us-east-1:373534280245:prod-alert"
+                          "arn:aws:sns:ap-northeast-1:373534280245:prod-alert"
                         ]
                       },
                       {
@@ -217,7 +217,7 @@
                           "sns:Publish"
                         ],
                         "Resource": [
-                          "arn:aws:sns:us-east-1:373534280245:prod-alert"
+                          "arn:aws:sns:ap-northeast-1:373534280245:prod-alert"
                         ]
                       },
                       {
@@ -226,7 +226,7 @@
                           "sns:Publish"
                         ],
                         "Resource": [
-                          "arn:aws:sns:us-east-1:373534280245:prod-alert"
+                          "arn:aws:sns:ap-northeast-1:373534280245:prod-alert"
                         ]
                       },
                       {
@@ -235,7 +235,7 @@
                           "sns:Publish"
                         ],
                         "Resource": [
-                          "arn:aws:sns:us-east-1:373534280245:prod-alert"
+                          "arn:aws:sns:ap-northeast-1:373534280245:prod-alert"
                         ]
                       },
                       {
@@ -244,7 +244,7 @@
                           "sns:Publish"
                         ],
                         "Resource": [
-                          "arn:aws:sns:us-east-1:373534280245:prod-alert"
+                          "arn:aws:sns:ap-northeast-1:373534280245:prod-alert"
                         ]
                       },
                       {
@@ -253,7 +253,7 @@
                           "sns:Publish"
                         ],
                         "Resource": [
-                          "arn:aws:sns:us-east-1:373534280245:prod-alert"
+                          "arn:aws:sns:ap-northeast-1:373534280245:prod-alert"
                         ]
                       }
                     ]
@@ -267,7 +267,7 @@
                   [
                     "video-broadcast",
                     "dev",
-                    "us-east-1",
+                    "ap-northeast-1",
                     "lambdaRole"
                   ]
                 ]
@@ -281,7 +281,7 @@
                 "S3Bucket": {
                   "Ref": "ServerlessDeploymentBucket"
                 },
-                "S3Key": "serverless/video-broadcast/dev/1529715047579-2018-06-23T00:50:47.579Z/video-broadcast.zip"
+                "S3Key": "serverless/video-broadcast/dev/1537114154231-2018-09-16T16:09:14.231Z/video-broadcast.zip"
               },
               "FunctionName": "video-broadcast-dev-get-user-profile",
               "Handler": "user-profile/index.handler",
@@ -295,7 +295,7 @@
               "Runtime": "nodejs8.10",
               "Timeout": 30,
               "DeadLetterConfig": {
-                "TargetArn": "arn:aws:sns:us-east-1:373534280245:prod-alert"
+                "TargetArn": "arn:aws:sns:ap-northeast-1:373534280245:prod-alert"
               },
               "Environment": {
                 "Variables": {
@@ -308,14 +308,14 @@
               "IamRoleLambdaExecution"
             ]
           },
-          "GetDashuserDashprofileLambdaVersionhOKLjsNGtGmTAcfdTD2FW6GeVouyAccp8hQMy1rh5o": {
+          "GetDashuserDashprofileLambdaVersionxuaf6mq9NamLOVfA1WL1nxRe2PFE7ciWpMML6rW1Y": {
             "Type": "AWS::Lambda::Version",
             "DeletionPolicy": "Retain",
             "Properties": {
               "FunctionName": {
                 "Ref": "GetDashuserDashprofileLambdaFunction"
               },
-              "CodeSha256": "gHfd1jIszdTvQa0Ed7ejlxCT7QyZcySMl2K8as0GQoA="
+              "CodeSha256": "ev0KxP49CZcXql8qB/3h0gI4SxvWPCZwePPK2sM88z4="
             }
           },
           "CustomDashauthorizerLambdaFunction": {
@@ -325,7 +325,7 @@
                 "S3Bucket": {
                   "Ref": "ServerlessDeploymentBucket"
                 },
-                "S3Key": "serverless/video-broadcast/dev/1529715047579-2018-06-23T00:50:47.579Z/video-broadcast.zip"
+                "S3Key": "serverless/video-broadcast/dev/1537114154231-2018-09-16T16:09:14.231Z/video-broadcast.zip"
               },
               "FunctionName": "video-broadcast-dev-custom-authorizer",
               "Handler": "custom-authorizer/index.handler",
@@ -339,7 +339,7 @@
               "Runtime": "nodejs8.10",
               "Timeout": 30,
               "DeadLetterConfig": {
-                "TargetArn": "arn:aws:sns:us-east-1:373534280245:prod-alert"
+                "TargetArn": "arn:aws:sns:ap-northeast-1:373534280245:prod-alert"
               },
               "Environment": {
                 "Variables": {
@@ -352,14 +352,14 @@
               "IamRoleLambdaExecution"
             ]
           },
-          "CustomDashauthorizerLambdaVersion2DOSRvec6olsdSVvlwSFoYe5pcofjxsOaJhuYrzQA": {
+          "CustomDashauthorizerLambdaVersionogDLPb19Er0UXWtzCjNoBNmliWbmAnnyRcJnuzAj87g": {
             "Type": "AWS::Lambda::Version",
             "DeletionPolicy": "Retain",
             "Properties": {
               "FunctionName": {
                 "Ref": "CustomDashauthorizerLambdaFunction"
               },
-              "CodeSha256": "gHfd1jIszdTvQa0Ed7ejlxCT7QyZcySMl2K8as0GQoA="
+              "CodeSha256": "ev0KxP49CZcXql8qB/3h0gI4SxvWPCZwePPK2sM88z4="
             }
           },
           "TranscodeDashvideoLambdaFunction": {
@@ -369,7 +369,7 @@
                 "S3Bucket": {
                   "Ref": "ServerlessDeploymentBucket"
                 },
-                "S3Key": "serverless/video-broadcast/dev/1529715047579-2018-06-23T00:50:47.579Z/video-broadcast.zip"
+                "S3Key": "serverless/video-broadcast/dev/1537114154231-2018-09-16T16:09:14.231Z/video-broadcast.zip"
               },
               "FunctionName": "video-broadcast-dev-transcode-video",
               "Handler": "transcode-video/index.handler",
@@ -383,12 +383,12 @@
               "Runtime": "nodejs8.10",
               "Timeout": 30,
               "DeadLetterConfig": {
-                "TargetArn": "arn:aws:sns:us-east-1:373534280245:prod-alert"
+                "TargetArn": "arn:aws:sns:ap-northeast-1:373534280245:prod-alert"
               },
               "Environment": {
                 "Variables": {
-                  "ELASTIC_TRANSCODER_PIPELINE_ID": "1526726798680-bq9661",
-                  "ELASTIC_TRANSCODER_REGION": "us-east-1"
+                  "ELASTIC_TRANSCODER_PIPELINE_ID": "1536490765349-wdq1g6",
+                  "ELASTIC_TRANSCODER_REGION": "ap-northeast-1"
                 }
               }
             },
@@ -397,14 +397,14 @@
               "IamRoleLambdaExecution"
             ]
           },
-          "TranscodeDashvideoLambdaVersionzjTwovGMUs9lE0nir8rNMVPBI9VUxLv2o5TsfHbrE8": {
+          "TranscodeDashvideoLambdaVersionNhuhwxLXzFknVrbZWjniNNYRk61jxO3vIZ41FEaIrs": {
             "Type": "AWS::Lambda::Version",
             "DeletionPolicy": "Retain",
             "Properties": {
               "FunctionName": {
                 "Ref": "TranscodeDashvideoLambdaFunction"
               },
-              "CodeSha256": "gHfd1jIszdTvQa0Ed7ejlxCT7QyZcySMl2K8as0GQoA="
+              "CodeSha256": "ev0KxP49CZcXql8qB/3h0gI4SxvWPCZwePPK2sM88z4="
             }
           },
           "GetDashuploadDashpolicyLambdaFunction": {
@@ -414,7 +414,7 @@
                 "S3Bucket": {
                   "Ref": "ServerlessDeploymentBucket"
                 },
-                "S3Key": "serverless/video-broadcast/dev/1529715047579-2018-06-23T00:50:47.579Z/video-broadcast.zip"
+                "S3Key": "serverless/video-broadcast/dev/1537114154231-2018-09-16T16:09:14.231Z/video-broadcast.zip"
               },
               "FunctionName": "video-broadcast-dev-get-upload-policy",
               "Handler": "create-s3-upload-policy-document/index.handler",
@@ -428,13 +428,13 @@
               "Runtime": "nodejs8.10",
               "Timeout": 30,
               "DeadLetterConfig": {
-                "TargetArn": "arn:aws:sns:us-east-1:373534280245:prod-alert"
+                "TargetArn": "arn:aws:sns:ap-northeast-1:373534280245:prod-alert"
               },
               "Environment": {
                 "Variables": {
                   "ACCESS_KEY_ID": "AKIAI5L5AC35GAYKC43Q",
                   "SECRET_ACCESS_KEY": "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",
-                  "UPLOAD_BUCKET": "video-upload-wezvqwefqef-dev",
+                  "UPLOAD_BUCKET": "video-upload-qejsadfqwefadfafqwef-dev",
                   "UPLOAD_URI": "https://s3.amazonaws.com"
                 }
               }
@@ -444,14 +444,14 @@
               "IamRoleLambdaExecution"
             ]
           },
-          "GetDashuploadDashpolicyLambdaVersionrJPL72eXJl35DwOz0Uq5CftbpKYJu8slYnpZZZD9So": {
+          "GetDashuploadDashpolicyLambdaVersionrShTEnvNYAPyxBefQkMgsSLM7qedttbcSLYxzmLDMMM": {
             "Type": "AWS::Lambda::Version",
             "DeletionPolicy": "Retain",
             "Properties": {
               "FunctionName": {
                 "Ref": "GetDashuploadDashpolicyLambdaFunction"
               },
-              "CodeSha256": "gHfd1jIszdTvQa0Ed7ejlxCT7QyZcySMl2K8as0GQoA="
+              "CodeSha256": "ev0KxP49CZcXql8qB/3h0gI4SxvWPCZwePPK2sM88z4="
             }
           },
           "PushDashtranscodedDashurlDashtoDashdbLambdaFunction": {
@@ -461,7 +461,7 @@
                 "S3Bucket": {
                   "Ref": "ServerlessDeploymentBucket"
                 },
-                "S3Key": "serverless/video-broadcast/dev/1529715047579-2018-06-23T00:50:47.579Z/video-broadcast.zip"
+                "S3Key": "serverless/video-broadcast/dev/1537114154231-2018-09-16T16:09:14.231Z/video-broadcast.zip"
               },
               "FunctionName": "video-broadcast-dev-push-transcoded-url-to-db",
               "Handler": "push-transcoded-url-to-db/index.handler",
@@ -475,11 +475,11 @@
               "Runtime": "nodejs8.10",
               "Timeout": 30,
               "DeadLetterConfig": {
-                "TargetArn": "arn:aws:sns:us-east-1:373534280245:prod-alert"
+                "TargetArn": "arn:aws:sns:ap-northeast-1:373534280245:prod-alert"
               },
               "Environment": {
                 "Variables": {
-                  "S3_TRANSCODED_BUCKET_URL": "https://dit0x3orc1zbj.cloudfront.net"
+                  "S3_TRANSCODED_BUCKET_URL": "https://dr8yjtnfa00ar.cloudfront.net"
                 }
               }
             },
@@ -488,14 +488,14 @@
               "IamRoleLambdaExecution"
             ]
           },
-          "PushDashtranscodedDashurlDashtoDashdbLambdaVersionIkYz0emu3qvHsG3TXV4yY51c0CfjCnRqLI3zAYxuA0": {
+          "PushDashtranscodedDashurlDashtoDashdbLambdaVersionT9pwjpjBtgnlTO6OxvfGYbuFPBaqVCbNUJSxG1XOO5E": {
             "Type": "AWS::Lambda::Version",
             "DeletionPolicy": "Retain",
             "Properties": {
               "FunctionName": {
                 "Ref": "PushDashtranscodedDashurlDashtoDashdbLambdaFunction"
               },
-              "CodeSha256": "gHfd1jIszdTvQa0Ed7ejlxCT7QyZcySMl2K8as0GQoA="
+              "CodeSha256": "ev0KxP49CZcXql8qB/3h0gI4SxvWPCZwePPK2sM88z4="
             }
           },
           "GetDashallDashvideosLambdaFunction": {
@@ -505,7 +505,7 @@
                 "S3Bucket": {
                   "Ref": "ServerlessDeploymentBucket"
                 },
-                "S3Key": "serverless/video-broadcast/dev/1529715047579-2018-06-23T00:50:47.579Z/video-broadcast.zip"
+                "S3Key": "serverless/video-broadcast/dev/1537114154231-2018-09-16T16:09:14.231Z/video-broadcast.zip"
               },
               "FunctionName": "video-broadcast-dev-get-all-videos",
               "Handler": "get-all-videos/index.handler",
@@ -519,7 +519,7 @@
               "Runtime": "nodejs8.10",
               "Timeout": 30,
               "DeadLetterConfig": {
-                "TargetArn": "arn:aws:sns:us-east-1:373534280245:prod-alert"
+                "TargetArn": "arn:aws:sns:ap-northeast-1:373534280245:prod-alert"
               }
             },
             "DependsOn": [
@@ -527,71 +527,14 @@
               "IamRoleLambdaExecution"
             ]
           },
-          "GetDashallDashvideosLambdaVersionoFsVCruLNtG0s3BALpwb1pSroQZBEvDJFKWMtD4y8": {
+          "GetDashallDashvideosLambdaVersionuYEdWu0qkRgeM5lryPzG10viFal41ozFQxz206nw": {
             "Type": "AWS::Lambda::Version",
             "DeletionPolicy": "Retain",
             "Properties": {
               "FunctionName": {
                 "Ref": "GetDashallDashvideosLambdaFunction"
               },
-              "CodeSha256": "gHfd1jIszdTvQa0Ed7ejlxCT7QyZcySMl2K8as0GQoA="
-            }
-          },
-          "S3BucketVideouploadwezvqwefqefdev": {
-            "Type": "AWS::S3::Bucket",
-            "Properties": {
-              "BucketName": "video-upload-wezvqwefqef-dev",
-              "NotificationConfiguration": {
-                "LambdaConfigurations": [
-                  {
-                    "Event": "s3:ObjectCreated:*",
-                    "Function": {
-                      "Fn::GetAtt": [
-                        "TranscodeDashvideoLambdaFunction",
-                        "Arn"
-                      ]
-                    }
-                  }
-                ]
-              }
-            },
-            "DependsOn": [
-              "TranscodeDashvideoLambdaPermissionVideouploadwezvqwefqefdevS3"
-            ]
-          },
-          "TranscodeDashvideoLambdaPermissionVideouploadwezvqwefqefdevS3": {
-            "Type": "AWS::Lambda::Permission",
-            "Properties": {
-              "FunctionName": {
-                "Fn::GetAtt": [
-                  "TranscodeDashvideoLambdaFunction",
-                  "Arn"
-                ]
-              },
-              "Action": "lambda:InvokeFunction",
-              "Principal": {
-                "Fn::Join": [
-                  "",
-                  [
-                    "s3.",
-                    {
-                      "Ref": "AWS::URLSuffix"
-                    }
-                  ]
-                ]
-              },
-              "SourceArn": {
-                "Fn::Join": [
-                  "",
-                  [
-                    "arn:",
-                    {
-                      "Ref": "AWS::Partition"
-                    },
-                    ":s3:::video-upload-wezvqwefqef-dev"
-                  ]
-                ]
-              }
+              "CodeSha256": "ev0KxP49CZcXql8qB/3h0gI4SxvWPCZwePPK2sM88z4="
             }
           },
           "ApiGatewayRestApi": {
@@ -673,6 +616,7 @@
                 "RequestTemplates": {
                   "application/json": "{statusCode:200}"
                 },
+                "ContentHandling": "CONVERT_TO_TEXT",
                 "IntegrationResponses": [
                   {
                     "StatusCode": "200",
@@ -719,6 +663,7 @@
                 "RequestTemplates": {
                   "application/json": "{statusCode:200}"
                 },
+                "ContentHandling": "CONVERT_TO_TEXT",
                 "IntegrationResponses": [
                   {
                     "StatusCode": "200",
@@ -765,6 +710,7 @@
                 "RequestTemplates": {
                   "application/json": "{statusCode:200}"
                 },
+                "ContentHandling": "CONVERT_TO_TEXT",
                 "IntegrationResponses": [
                   {
                     "StatusCode": "200",
@@ -973,7 +919,7 @@
               "Type": "TOKEN"
             }
           },
-          "ApiGatewayDeployment1529715047948": {
+          "ApiGatewayDeployment1537114154653": {
             "Type": "AWS::ApiGateway::Deployment",
             "Properties": {
               "RestApiId": {
@@ -1154,7 +1100,7 @@
           "PushDashtranscodedDashurlDashtoDashdbSnsSubscriptionVideotranscodecomplete": {
             "Type": "AWS::SNS::Subscription",
             "Properties": {
-              "TopicArn": "arn:aws:sns:us-east-1:373534280245:video-transcode-complete",
+              "TopicArn": "arn:aws:sns:ap-northeast-1:373534280245:video-transcode-complete",
               "Protocol": "lambda",
               "Endpoint": {
                 "Fn::GetAtt": [
@@ -1185,13 +1131,13 @@
                   ]
                 ]
               },
-              "SourceArn": "arn:aws:sns:us-east-1:373534280245:video-transcode-complete"
+              "SourceArn": "arn:aws:sns:ap-northeast-1:373534280245:video-transcode-complete"
             }
           },
           "S3BucketPermissions": {
             "Type": "AWS::S3::BucketPolicy",
             "Properties": {
-              "Bucket": "video-transcoded-qezsdqwerqwr-dev",
+              "Bucket": "video-transcoded-yewnsdiqsdfq-dev",
               "PolicyDocument": {
                 "Statement": [
                   {
@@ -1201,7 +1147,7 @@
                     ],
                     "Effect": "Allow",
                     "Sid": "AddPerm",
-                    "Resource": "arn:aws:s3:::video-transcoded-qezsdqwerqwr-dev/*"
+                    "Resource": "arn:aws:s3:::video-transcoded-yewnsdiqsdfq-dev/*"
                   }
                 ]
               }
@@ -1217,37 +1163,37 @@
           "GetDashuserDashprofileLambdaFunctionQualifiedArn": {
             "Description": "Current Lambda function version",
             "Value": {
-              "Ref": "GetDashuserDashprofileLambdaVersionhOKLjsNGtGmTAcfdTD2FW6GeVouyAccp8hQMy1rh5o"
+              "Ref": "GetDashuserDashprofileLambdaVersionxuaf6mq9NamLOVfA1WL1nxRe2PFE7ciWpMML6rW1Y"
             }
           },
           "CustomDashauthorizerLambdaFunctionQualifiedArn": {
             "Description": "Current Lambda function version",
             "Value": {
-              "Ref": "CustomDashauthorizerLambdaVersion2DOSRvec6olsdSVvlwSFoYe5pcofjxsOaJhuYrzQA"
+              "Ref": "CustomDashauthorizerLambdaVersionogDLPb19Er0UXWtzCjNoBNmliWbmAnnyRcJnuzAj87g"
             }
           },
           "TranscodeDashvideoLambdaFunctionQualifiedArn": {
             "Description": "Current Lambda function version",
             "Value": {
-              "Ref": "TranscodeDashvideoLambdaVersionzjTwovGMUs9lE0nir8rNMVPBI9VUxLv2o5TsfHbrE8"
+              "Ref": "TranscodeDashvideoLambdaVersionNhuhwxLXzFknVrbZWjniNNYRk61jxO3vIZ41FEaIrs"
             }
           },
           "GetDashuploadDashpolicyLambdaFunctionQualifiedArn": {
             "Description": "Current Lambda function version",
             "Value": {
-              "Ref": "GetDashuploadDashpolicyLambdaVersionrJPL72eXJl35DwOz0Uq5CftbpKYJu8slYnpZZZD9So"
+              "Ref": "GetDashuploadDashpolicyLambdaVersionrShTEnvNYAPyxBefQkMgsSLM7qedttbcSLYxzmLDMMM"
             }
           },
           "PushDashtranscodedDashurlDashtoDashdbLambdaFunctionQualifiedArn": {
             "Description": "Current Lambda function version",
             "Value": {
-              "Ref": "PushDashtranscodedDashurlDashtoDashdbLambdaVersionIkYz0emu3qvHsG3TXV4yY51c0CfjCnRqLI3zAYxuA0"
+              "Ref": "PushDashtranscodedDashurlDashtoDashdbLambdaVersionT9pwjpjBtgnlTO6OxvfGYbuFPBaqVCbNUJSxG1XOO5E"
             }
           },
           "GetDashallDashvideosLambdaFunctionQualifiedArn": {
             "Description": "Current Lambda function version",
             "Value": {
-              "Ref": "GetDashallDashvideosLambdaVersionoFsVCruLNtG0s3BALpwb1pSroQZBEvDJFKWMtD4y8"
+              "Ref": "GetDashallDashvideosLambdaVersionuYEdWu0qkRgeM5lryPzG10viFal41ozFQxz206nw"
             }
           },
           "ServiceEndpoint": {
@@ -1260,7 +1206,7 @@
                   {
                     "Ref": "ApiGatewayRestApi"
                   },
-                  ".execute-api.us-east-1.",
+                  ".execute-api.ap-northeast-1.",
                   {
                     "Ref": "AWS::URLSuffix"
                   },
@@ -1290,18 +1236,19 @@
       "vpc": {}
     },
     "custom": {
-      "upload_bucket": "video-upload-wezvqwefqef-dev",
-      "transcoded_bucket": "video-transcoded-qezsdqwerqwr-dev",
-      "dlq_sns_arn": "arn:aws:sns:us-east-1:373534280245:prod-alert",
+      "upload_bucket": "video-upload-qejsadfqwefadfafqwef-dev",
+      "transcoded_bucket": "video-transcoded-yewnsdiqsdfq-dev",
+      "dlq_sns_arn": "arn:aws:sns:ap-northeast-1:373534280245:prod-alert",
       "elastic_transcoder_pipelineid": {
-        "dev": "1526726798680-bq9661",
+        "dev": "1536490765349-wdq1g6",
         "prod": null
       }
     },
+    "pluginsData": {},
     "functions": {
       "get-user-profile": {
         "handler": "user-profile/index.handler",
-        "onError": "arn:aws:sns:us-east-1:373534280245:prod-alert",
+        "onError": "arn:aws:sns:ap-northeast-1:373534280245:prod-alert",
         "events": [
           {
             "http": {
@@ -1353,41 +1300,43 @@
         },
         "name": "video-broadcast-dev-get-user-profile",
         "package": {},
+        "memory": 512,
+        "timeout": 30,
+        "runtime": "nodejs8.10",
         "vpc": {}
       },
       "custom-authorizer": {
         "handler": "custom-authorizer/index.handler",
-        "onError": "arn:aws:sns:us-east-1:373534280245:prod-alert",
+        "onError": "arn:aws:sns:ap-northeast-1:373534280245:prod-alert",
         "environment": {
           "AUTH0_DOMAIN": "harold-mb.auth0.com"
         },
         "events": [],
         "name": "video-broadcast-dev-custom-authorizer",
         "package": {},
+        "memory": 512,
+        "timeout": 30,
+        "runtime": "nodejs8.10",
         "vpc": {}
       },
       "transcode-video": {
         "handler": "transcode-video/index.handler",
-        "onError": "arn:aws:sns:us-east-1:373534280245:prod-alert",
-        "events": [
-          {
-            "s3": {
-              "bucket": "video-upload-wezvqwefqef-dev",
-              "event": "s3:ObjectCreated:*"
-            }
-          }
-        ],
+        "onError": "arn:aws:sns:ap-northeast-1:373534280245:prod-alert",
         "environment": {
-          "ELASTIC_TRANSCODER_PIPELINE_ID": "1526726798680-bq9661",
-          "ELASTIC_TRANSCODER_REGION": "us-east-1"
+          "ELASTIC_TRANSCODER_PIPELINE_ID": "1536490765349-wdq1g6",
+          "ELASTIC_TRANSCODER_REGION": "ap-northeast-1"
         },
+        "events": [],
         "name": "video-broadcast-dev-transcode-video",
         "package": {},
+        "memory": 512,
+        "timeout": 30,
+        "runtime": "nodejs8.10",
         "vpc": {}
       },
       "get-upload-policy": {
         "handler": "create-s3-upload-policy-document/index.handler",
-        "onError": "arn:aws:sns:us-east-1:373534280245:prod-alert",
+        "onError": "arn:aws:sns:ap-northeast-1:373534280245:prod-alert",
         "events": [
           {
             "http": {
@@ -1437,31 +1386,37 @@
         "environment": {
           "ACCESS_KEY_ID": "AKIAI5L5AC35GAYKC43Q",
           "SECRET_ACCESS_KEY": "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",
-          "UPLOAD_BUCKET": "video-upload-wezvqwefqef-dev",
+          "UPLOAD_BUCKET": "video-upload-qejsadfqwefadfafqwef-dev",
           "UPLOAD_URI": "https://s3.amazonaws.com"
         },
         "name": "video-broadcast-dev-get-upload-policy",
         "package": {},
+        "memory": 512,
+        "timeout": 30,
+        "runtime": "nodejs8.10",
         "vpc": {}
       },
       "push-transcoded-url-to-db": {
         "handler": "push-transcoded-url-to-db/index.handler",
-        "onError": "arn:aws:sns:us-east-1:373534280245:prod-alert",
+        "onError": "arn:aws:sns:ap-northeast-1:373534280245:prod-alert",
         "events": [
           {
-            "sns": "arn:aws:sns:us-east-1:373534280245:video-transcode-complete"
+            "sns": "arn:aws:sns:ap-northeast-1:373534280245:video-transcode-complete"
           }
         ],
         "environment": {
-          "S3_TRANSCODED_BUCKET_URL": "https://dit0x3orc1zbj.cloudfront.net"
+          "S3_TRANSCODED_BUCKET_URL": "https://dr8yjtnfa00ar.cloudfront.net"
         },
         "name": "video-broadcast-dev-push-transcoded-url-to-db",
         "package": {},
+        "memory": 512,
+        "timeout": 30,
+        "runtime": "nodejs8.10",
         "vpc": {}
       },
       "get-all-videos": {
         "handler": "get-all-videos/index.handler",
-        "onError": "arn:aws:sns:us-east-1:373534280245:prod-alert",
+        "onError": "arn:aws:sns:ap-northeast-1:373534280245:prod-alert",
         "events": [
           {
             "http": {
@@ -1510,6 +1465,9 @@
         ],
         "name": "video-broadcast-dev-get-all-videos",
         "package": {},
+        "memory": 512,
+        "timeout": 30,
+        "runtime": "nodejs8.10",
         "vpc": {}
       }
     },
@@ -1518,7 +1476,7 @@
         "S3BucketPermissions": {
           "Type": "AWS::S3::BucketPolicy",
           "Properties": {
-            "Bucket": "video-transcoded-qezsdqwerqwr-dev",
+            "Bucket": "video-transcoded-yewnsdiqsdfq-dev",
             "PolicyDocument": {
               "Statement": [
                 {
@@ -1528,7 +1486,7 @@
                   ],
                   "Effect": "Allow",
                   "Sid": "AddPerm",
-                  "Resource": "arn:aws:s3:::video-transcoded-qezsdqwerqwr-dev/*"
+                  "Resource": "arn:aws:s3:::video-transcoded-yewnsdiqsdfq-dev/*"
                 }
               ]
             }
@@ -1540,7 +1498,7 @@
     "artifact": "/Users/sunhua/Documents/Projects/github.com/bnusunny/serverless-video-broadcast-app/lambda/.serverless/video-broadcast.zip"
   },
   "package": {
-    "artifactDirectoryName": "serverless/video-broadcast/dev/1529715047579-2018-06-23T00:50:47.579Z",
+    "artifactDirectoryName": "serverless/video-broadcast/dev/1537114154231-2018-09-16T16:09:14.231Z",
     "artifact": "video-broadcast.zip"
   }
 }

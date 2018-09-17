@@ -10,9 +10,9 @@
   "license": "ISC",
   "dependencies": {
     "aws-sdk": "^2.204.0",
+    "firebase": "~3.2.1",
     "jsonwebtoken": "^5.7.0",
     "request": "^2.86.0",
-    "request-promise": "^4.2.2",
-    "firebase": "~3.2.1"
+    "request-promise": "^4.2.2"
   }
 }

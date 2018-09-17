@@ -13,17 +13,21 @@ const AWS = require('aws-sdk');
 const generateResponse = (status, message) => {
     return {
         statusCode: status,
-        headers: { 'Access-Control-Allow-Origin': '*' },
-        body: JSON.stringify({'message':message})
+        headers: {
+            'Access-Control-Allow-Origin': '*'
+        },
+        body: JSON.stringify({
+            'message': message
+        })
     }
 };
 
 const handler = async (event, context, callback) => {
     const docClient = new AWS.DynamoDB.DocumentClient();
     try {
-        const allVideoItems = await docClient.scan({ 
+        const allVideoItems = await docClient.scan({
             TableName: 'Videos',
-            ProjectionExpression: "ID, transcoding, video_urls"
+            ProjectionExpression: "ID, transcoding, video_urls, thumbnail, playlist, userID, created_at"
         }).promise();
 
         const response = generateResponse(200, allVideoItems);
@@ -35,7 +39,7 @@ const handler = async (event, context, callback) => {
         callback(null, response);
 
     }
-    
+
 }
 
 module.exports = {

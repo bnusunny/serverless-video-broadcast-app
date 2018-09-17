@@ -21,9 +21,10 @@ var uploadController = {
             var file = $('#upload').get(0).files[0];
             var requestDocumentUrl = that.data.config.apiBaseUrl + '/s3-policy-document?filename=' + encodeURI(file.name);
 
-            $.get(requestDocumentUrl, function (data, status) {
-                that.upload(file, data, that)
-            });
+            $.get(requestDocumentUrl,
+                function (data, status) {
+                    that.upload(file, data, that);
+                });
 
             this.value = null;
         });

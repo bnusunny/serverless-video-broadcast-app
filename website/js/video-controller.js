@@ -118,9 +118,10 @@ var videoController = {
             const allVideoItems = await $.ajax({
                 url: getAllVideoUrl,
                 type: 'GET',
+                crossDomain: true,
                 beforeSend: function (req) {
                     req.setRequestHeader('Authorization', 'Bearer ' + idToken);
-                }
+                 }
             });
 
             that.uiElements.loadingIndicator.hide();

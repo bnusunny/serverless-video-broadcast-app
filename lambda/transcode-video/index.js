@@ -37,15 +37,56 @@ const generateTranscoderParams = (sourceKey, outputKey, transcoderPipelineID) =>
                 Key: outputKey + '-web-720p' + '.mp4',
                 PresetId: '1351620000001-100070' //Web Friendly 720p
             },
-            // {
-            //     Key: outputKey + '-hls-2m',
-            //     PresetId: '1351620000001-200015' //HLS Video - 2M 
-            // },
-            // {
-            //     Key: outputKey + '-hls-1m',
-            //     PresetId: '1351620000001-200035' //HLS Video - 1M
-            // },
-        ]
+            {
+                "Key": outputKey + "-2048k",
+                "ThumbnailPattern": outputKey + "-2048k-{count}",
+                "Rotate":"0",
+                "PresetId":"1351620000001-200010",
+                "SegmentDuration":"5"
+             },
+             {
+                "Key": outputKey + "-1536k",
+                "ThumbnailPattern": outputKey + "-1536k-{count}",
+                "Rotate":"0",
+                "PresetId":"1351620000001-200020",
+                "SegmentDuration":"5"
+             },
+            {
+                "Key": outputKey + "-1024k",
+                "ThumbnailPattern": outputKey + "-1024k-{count}",
+                "Rotate":"0",
+                "PresetId":"1351620000001-200030",
+                "SegmentDuration":"5"
+             },
+             {
+                "Key": outputKey + "-600k",
+                "ThumbnailPattern": outputKey + "-600k-{count}",
+                "Rotate":"0",
+                "PresetId":"1351620000001-200040",
+                "SegmentDuration":"5"
+             },             
+
+             {
+                "Key": outputKey + "-400k",
+                "ThumbnailPattern": outputKey + "-400k-{count}",
+                "Rotate":"0",
+                "PresetId":"1351620000001-200050",
+                "SegmentDuration":"5"
+             },
+        ],
+        "Playlists": [
+            {
+                "Format": "HLSv3",
+                "Name": outputKey,
+                "OutputKeys": [
+                    outputKey + "-400k",
+                    outputKey + "-600k",
+                    outputKey + "-1024k",
+                    outputKey + "-1536k",
+                    outputKey + "-2048k",
+                ]
+            }
+         ],
     };
 
     return params;
@@ -63,7 +104,7 @@ const pushVideoEntryToDynamodb = async (uniqueKey, sourceKey, pipelineID) => {
             transcoding: true,
             sourceKey: sourceKey,
             pipelineID: pipelineID,
-            userID: sourceKey.split("/")[0],
+            userID: sourceKey.split("/")[1],
             created_at: new Date().toISOString()
         }
     };
@@ -88,7 +129,7 @@ const handler = async (event, context, callback) => {
     console.log("Output key:", outputKey);
 
     // get the unique video key (the folder name)
-    const uniqueVideoKey = outputKey.split('/')[1];
+    const uniqueVideoKey = outputKey.split('/')[2];
 
     const params = generateTranscoderParams(sourceKey, outputKey, pipelineID);
 
