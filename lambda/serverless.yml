@@ -107,8 +107,8 @@ functions:
             name: custom-authorizer
             identitySource: method.request.header.Authorization
     environment:
-      ACCESS_KEY_ID: AKIAI5L5AC35GAYKC43Q
-      SECRET_ACCESS_KEY: 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
+      ACCESS_KEY_ID: update-AK
+      SECRET_ACCESS_KEY: update-SK
       UPLOAD_BUCKET: ${self:custom.upload_bucket}
       UPLOAD_URI: https://s3.amazonaws.com
 
