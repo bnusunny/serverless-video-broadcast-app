@@ -75,11 +75,11 @@ export default class VideoRecordScreen extends React.Component {
                 >
                 <View
                   style={{
-                    flex: 1,
                     backgroundColor: 'transparent',
+                    flex: 1, 
                     flexDirection: 'row',
-                    alignSelf: 'center',
-                    alignItems: 'flex-end',
+                    justifyContent: 'center',
+                    alignItems:'flex-end'
                   }}>
                       {
                         this.state.isRecording   
