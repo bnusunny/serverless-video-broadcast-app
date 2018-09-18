@@ -14,7 +14,8 @@ export default class HomeScreen extends React.Component {
       super(props);
       this.state = {
         loading: false,
-        videos: []
+        videos: [],
+        votes: {},
       };
     }
   
@@ -57,11 +58,15 @@ export default class HomeScreen extends React.Component {
         const response = await API.get(apiName, path, myInit);
         const videoItems = response.data.message.Items;
   
-        // console.debug("API Response: " + JSON.stringify(videoItems));
+        const videoVotes = videoItems.reduce( function (accumulator, currentItem) {
+          accumulator[currentItem.ID] = currentItem.voteCount || 0;
+          return accumulator;
+        } , {} );
   
         this.setState({
           loading: false,
-          videos: videoItems
+          videos: videoItems,
+          votes: videoVotes,
         });
   
       } catch (error) {
@@ -74,9 +79,34 @@ export default class HomeScreen extends React.Component {
       this.getAllVideos();
     }
 
+    async increaseVote(itemID) {
+      const originalLocalVotes = Object.assign({}, this.state.votes);
+      try {
+        const currentLocalVotes = Object.assign({}, this.state.votes);
+        currentLocalVotes[itemID] = currentLocalVotes[itemID] ? currentLocalVotes[itemID] + 1 : 1;
+        this.setState({votes: currentLocalVotes}); 
+  
+        const response = await API.post('apiUpVote', '/vote', {
+            response: true,
+            body: {
+              ID: `${itemID}`,
+            }
+        });
+        const serverVote = response.data.message.voteCount;
+        const currentVotes = Object.assign({}, this.state.votes);
+        currentVotes[itemID] = serverVote; 
+        this.setState({votes: currentVotes}); 
+  
+      } catch (error) {
+        this.setState({votes: originalLocalVotes}); 
+        console.error(error);
+      }
+
+    }
+
     render() {
   
-      // console.debug(`current state is ${JSON.stringify(this.state)}`);
+      // console.debug(`current votes is ${JSON.stringify(this.state.votes)}`);
   
       return (
         <View>
@@ -84,13 +114,23 @@ export default class HomeScreen extends React.Component {
               data={this.state.videos}
               extraData={this.state}
               renderItem={({ item }) => (
-                <TouchableOpacity 
-                  onPress = {() => this.props.navigation.navigate('VideoPlay', {playlist: item.playlist, video_urls: item.video_urls})} > 
-                  <Card image={{ uri: item.thumbnail }} > 
+                <Card 
+                  image={{ uri: item.thumbnail }}
+                  onPressImage = {() => this.props.navigation.navigate('VideoPlay', {playlist: item.playlist})}  
+                  > 
+                  <View style={{flex: 1, flexDirection: 'row'}}>
+                    <View style={{flex: 3 }}>
                       <Text style={{color: 'black'}}> {item.userID} </Text>
                       <Text style={{color: 'blue'}}> {new Date(item.created_at).toLocaleString()} </Text>
-                    </Card>
-                </TouchableOpacity>
+                    </View>
+                    <View style={{flex: 1, flexDirection: 'row', justifyContent: 'center', alignItems: 'center', }}>
+                      <TouchableOpacity onPress={() => this.increaseVote(item.ID)} >
+                        <Icon name='favorite' color='red' ></Icon>
+                      </TouchableOpacity>
+                      <Text > {this.state.votes[item.ID] || 0} </Text>
+                    </View>
+                  </View>
+                </Card>
               )}
               keyExtractor={item => item.ID}
               onRefresh={ () => this.handleRefresh() }

@@ -40,28 +40,24 @@ const generateTranscoderParams = (sourceKey, outputKey, transcoderPipelineID) =>
             {
                 "Key": outputKey + "-2048k",
                 "ThumbnailPattern": outputKey + "-2048k-{count}",
-                "Rotate":"0",
                 "PresetId":"1351620000001-200010",
                 "SegmentDuration":"5"
              },
              {
                 "Key": outputKey + "-1536k",
                 "ThumbnailPattern": outputKey + "-1536k-{count}",
-                "Rotate":"0",
                 "PresetId":"1351620000001-200020",
                 "SegmentDuration":"5"
              },
             {
                 "Key": outputKey + "-1024k",
                 "ThumbnailPattern": outputKey + "-1024k-{count}",
-                "Rotate":"0",
                 "PresetId":"1351620000001-200030",
                 "SegmentDuration":"5"
              },
              {
                 "Key": outputKey + "-600k",
                 "ThumbnailPattern": outputKey + "-600k-{count}",
-                "Rotate":"0",
                 "PresetId":"1351620000001-200040",
                 "SegmentDuration":"5"
              },             
@@ -69,7 +65,6 @@ const generateTranscoderParams = (sourceKey, outputKey, transcoderPipelineID) =>
              {
                 "Key": outputKey + "-400k",
                 "ThumbnailPattern": outputKey + "-400k-{count}",
-                "Rotate":"0",
                 "PresetId":"1351620000001-200050",
                 "SegmentDuration":"5"
              },
@@ -79,11 +74,11 @@ const generateTranscoderParams = (sourceKey, outputKey, transcoderPipelineID) =>
                 "Format": "HLSv3",
                 "Name": outputKey,
                 "OutputKeys": [
-                    outputKey + "-400k",
-                    outputKey + "-600k",
-                    outputKey + "-1024k",
-                    outputKey + "-1536k",
                     outputKey + "-2048k",
+                    outputKey + "-1536k",
+                    outputKey + "-1024k",
+                    outputKey + "-600k",
+                    outputKey + "-400k",
                 ]
             }
          ],

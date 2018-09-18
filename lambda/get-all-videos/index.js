@@ -27,7 +27,7 @@ const handler = async (event, context, callback) => {
     try {
         const allVideoItems = await docClient.scan({
             TableName: 'Videos',
-            ProjectionExpression: "ID, transcoding, video_urls, thumbnail, playlist, userID, created_at"
+            ProjectionExpression: "ID, transcoding, video_urls, thumbnail, playlist, userID, voteCount, created_at"
         }).promise();
 
         const response = generateResponse(200, allVideoItems);

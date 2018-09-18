@@ -19,7 +19,7 @@
 				"s3TemplateURL": "https://s3.amazonaws.com/app-20180910212614-deployment/amplify-cfn-templates/auth/cognito774aead0-cloudformation-template.yml",
 				"logicalId": "authcognito774aead0"
 			},
-			"lastPushTimeStamp": "2018-09-16T15:37:35.644Z",
+			"lastPushTimeStamp": "2018-09-18T16:31:06.480Z",
 			"output": {
 				"AppClientSecret": "7beu2nmg59hvs6dsi0a9fd9i3k5kcrj00k16igahfq0sjca67tm",
 				"UserPoolId": "ap-northeast-1_P52GHiEQH",
@@ -40,7 +40,7 @@
 				"s3TemplateURL": "https://s3.amazonaws.com/app-20180910212614-deployment/amplify-cfn-templates/storage/dynamoVideos-cloudformation-template.json",
 				"logicalId": "storagedynamoVideos"
 			},
-			"lastPushTimeStamp": "2018-09-16T15:37:35.645Z",
+			"lastPushTimeStamp": "2018-09-18T16:31:06.482Z",
 			"output": {
 				"PartitionKeyName": "ID",
 				"Region": "ap-northeast-1",
@@ -57,7 +57,7 @@
 				"s3TemplateURL": "https://s3.amazonaws.com/app-20180910212614-deployment/amplify-cfn-templates/storage/s3-cloudformation-template.json",
 				"logicalId": "storages3Video"
 			},
-			"lastPushTimeStamp": "2018-09-16T15:37:35.652Z",
+			"lastPushTimeStamp": "2018-09-18T16:31:06.488Z",
 			"output": {
 				"BucketName": "video-upload-qejsadfqwefadfafqwef-dev",
 				"Region": "ap-northeast-1"
@@ -74,12 +74,27 @@
 				"s3TemplateURL": "https://s3.amazonaws.com/app-20180910212614-deployment/amplify-cfn-templates/api/apiGetAllVideos-cloudformation-template.json",
 				"logicalId": "apiapiGetAllVideos"
 			},
-			"lastPushTimeStamp": "2018-09-16T15:37:35.651Z",
+			"lastPushTimeStamp": "2018-09-18T16:31:06.488Z",
 			"output": {
 				"ApiName": "apiGetAllVideos",
 				"RootUrl": "https://p6qirenmzj.execute-api.ap-northeast-1.amazonaws.com/Prod"
 			},
 			"lastPushDirHash": "K3cpeWS15Kzafwfb9nuhTRhqsko="
+		},
+		"apiUpVote": {
+			"service": "API Gateway",
+			"providerPlugin": "awscloudformation",
+			"dependsOn": [],
+			"providerMetadata": {
+				"s3TemplateURL": "https://s3.amazonaws.com/app-20180910212614-deployment/amplify-cfn-templates/api/apiUpVote-cloudformation-template.json",
+				"logicalId": "apiapiUpVote"
+			},
+			"lastPushTimeStamp": "2018-09-18T16:31:06.490Z",
+			"output": {
+				"ApiName": "apiUpVote",
+				"RootUrl": "https://ednzpydcyc.execute-api.ap-northeast-1.amazonaws.com/Prod"
+			},
+			"lastPushDirHash": "3ovdpWTF0SNrEqN119B/h3dbaRc="
 		}
 	},
 	"hosting": {
@@ -90,7 +105,7 @@
 				"s3TemplateURL": "https://s3.amazonaws.com/app-20180910212614-deployment/amplify-cfn-templates/hosting/template.json",
 				"logicalId": "hostingS3AndCloudFront"
 			},
-			"lastPushTimeStamp": "2018-09-16T15:37:35.652Z",
+			"lastPushTimeStamp": "2018-09-18T16:31:06.489Z",
 			"output": {
 				"CloudFrontSecureURL": "https://dr8yjtnfa00ar.cloudfront.net",
 				"S3BucketSecureURL": "https://video-transcoded-yewnsdiqsdfq-dev.s3.amazonaws.com",

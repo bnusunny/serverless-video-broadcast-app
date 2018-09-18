@@ -87,7 +87,7 @@ export default class VideoRecordScreen extends React.Component {
                             <Icon name="stop" size={70} color="red" />
                           </TouchableOpacity>)
                         : (<TouchableOpacity onPress={this.startVideoRecording} > 
-                            <Icon name="radio-button-checked" id='record_button' size={70} color="white" />
+                            <Icon name="radio-button-checked" size={70} color="white" />
                           </TouchableOpacity>)
                       }
                 </View>

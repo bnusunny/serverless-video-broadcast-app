@@ -20,6 +20,11 @@ const awsmobile =  {
             "name": "apiGetAllVideos",
             "endpoint": "https://p6qirenmzj.execute-api.ap-northeast-1.amazonaws.com/Prod",
             "region": "ap-northeast-1"
+        },
+        {
+            "name": "apiUpVote",
+            "endpoint": "https://ednzpydcyc.execute-api.ap-northeast-1.amazonaws.com/Prod",
+            "region": "ap-northeast-1"
         }
     ],
     "aws_content_delivery_bucket": "video-transcoded-yewnsdiqsdfq-dev",

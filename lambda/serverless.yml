@@ -52,31 +52,6 @@ provider:
 
 
 functions:
-  get-user-profile:
-    handler: user-profile/index.handler
-    onError: ${self:custom.dlq_sns_arn}
-    events:
-      - http:
-          path: user-profile
-          method: get
-          cors: true
-          request:
-            parameters:
-              querystrings:
-                accessToken: false
-              headers:
-                Authorization: false
-          authorizer:
-            name: custom-authorizer
-            identitySource: method.request.header.Authorization
-    environment:
-      AUTH0_DOMAIN: harold-mb.auth0.com
-
-  custom-authorizer:
-    handler: custom-authorizer/index.handler
-    onError: ${self:custom.dlq_sns_arn}
-    environment:
-      AUTH0_DOMAIN: harold-mb.auth0.com   
 
   transcode-video:
     handler: transcode-video/index.handler
@@ -88,29 +63,6 @@ functions:
     environment: 
       ELASTIC_TRANSCODER_PIPELINE_ID: ${self:custom.elastic_transcoder_pipelineid.${opt:stage, self:provider.stage}}
       ELASTIC_TRANSCODER_REGION: ap-northeast-1
-
-  get-upload-policy: 
-    handler: create-s3-upload-policy-document/index.handler
-    onError: ${self:custom.dlq_sns_arn}
-    events: 
-      - http:
-          path: s3-policy-document
-          method: get
-          cors: true
-          request:
-            parameters:
-              querystrings:
-                accessToken: false
-              headers:
-                Authorization: false
-          authorizer:
-            name: custom-authorizer
-            identitySource: method.request.header.Authorization
-    environment:
-      ACCESS_KEY_ID: update-AK
-      SECRET_ACCESS_KEY: update-SK
-      UPLOAD_BUCKET: ${self:custom.upload_bucket}
-      UPLOAD_URI: https://s3.amazonaws.com
 
   push-transcoded-url-to-db: 
     handler: push-transcoded-url-to-db/index.handler
@@ -134,9 +86,21 @@ functions:
                 accessToken: false
               headers:
                 Authorization: false
-          authorizer:
-            name: custom-authorizer
-            identitySource: method.request.header.Authorization
+
+  push-user-votes: 
+    handler: push-user-votes/index.handler 
+    onError: ${self:custom.dlq_sns_arn} 
+    events: 
+      - http:
+          path: push-votes
+          method: post
+          cors: true
+          request:
+            parameters:
+              querystrings:
+                accessToken: false
+              headers:
+                Authorization: false
 
 resources:
   Resources:

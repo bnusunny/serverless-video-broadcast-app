@@ -45,9 +45,6 @@ export default class VideoPlayScreenScreen extends React.Component {
     render() {
 
         const playlist = this.props.navigation.getParam('playlist', null)
-        const video_urls = this.props.navigation.getParam('video_urls', null);
-        const first_video = video_urls[0];
-        console.debug(`navigation paramter 'first_video': ${first_video}`);
 
         return (
             <View style={styles.container}>
@@ -57,8 +54,7 @@ export default class VideoPlayScreenScreen extends React.Component {
                         shouldPlay: true,
                         resizeMode: Video.RESIZE_MODE_CONTAIN,
                         source: {
-                            // uri: playlist,
-                            uri: first_video,
+                            uri: playlist,
                         },
                     }}
                     ref={ref => {

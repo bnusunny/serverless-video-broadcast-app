@@ -161,6 +161,13 @@
 				"Parameters": {}
 			}
 		},
+		"apiapiUpVote": {
+			"Type": "AWS::CloudFormation::Stack",
+			"Properties": {
+				"TemplateURL": "https://s3.amazonaws.com/app-20180910212614-deployment/amplify-cfn-templates/api/apiUpVote-cloudformation-template.json",
+				"Parameters": {}
+			}
+		},
 		"hostingS3AndCloudFront": {
 			"Type": "AWS::CloudFormation::Stack",
 			"Properties": {

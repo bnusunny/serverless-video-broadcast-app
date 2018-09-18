@@ -68,28 +68,10 @@
           "ServerlessDeploymentBucket": {
             "Type": "AWS::S3::Bucket"
           },
-          "GetDashuserDashprofileLogGroup": {
-            "Type": "AWS::Logs::LogGroup",
-            "Properties": {
-              "LogGroupName": "/aws/lambda/video-broadcast-dev-get-user-profile"
-            }
-          },
-          "CustomDashauthorizerLogGroup": {
-            "Type": "AWS::Logs::LogGroup",
-            "Properties": {
-              "LogGroupName": "/aws/lambda/video-broadcast-dev-custom-authorizer"
-            }
-          },
           "TranscodeDashvideoLogGroup": {
             "Type": "AWS::Logs::LogGroup",
             "Properties": {
               "LogGroupName": "/aws/lambda/video-broadcast-dev-transcode-video"
-            }
-          },
-          "GetDashuploadDashpolicyLogGroup": {
-            "Type": "AWS::Logs::LogGroup",
-            "Properties": {
-              "LogGroupName": "/aws/lambda/video-broadcast-dev-get-upload-policy"
             }
           },
           "PushDashtranscodedDashurlDashtoDashdbLogGroup": {
@@ -102,6 +84,12 @@
             "Type": "AWS::Logs::LogGroup",
             "Properties": {
               "LogGroupName": "/aws/lambda/video-broadcast-dev-get-all-videos"
+            }
+          },
+          "PushDashuserDashvotesLogGroup": {
+            "Type": "AWS::Logs::LogGroup",
+            "Properties": {
+              "LogGroupName": "/aws/lambda/video-broadcast-dev-push-user-votes"
             }
           },
           "IamRoleLambdaExecution": {
@@ -145,22 +133,16 @@
                         ],
                         "Resource": [
                           {
-                            "Fn::Sub": "arn:${AWS::Partition}:logs:${AWS::Region}:${AWS::AccountId}:log-group:/aws/lambda/video-broadcast-dev-get-user-profile:*"
-                          },
-                          {
-                            "Fn::Sub": "arn:${AWS::Partition}:logs:${AWS::Region}:${AWS::AccountId}:log-group:/aws/lambda/video-broadcast-dev-custom-authorizer:*"
-                          },
-                          {
                             "Fn::Sub": "arn:${AWS::Partition}:logs:${AWS::Region}:${AWS::AccountId}:log-group:/aws/lambda/video-broadcast-dev-transcode-video:*"
-                          },
-                          {
-                            "Fn::Sub": "arn:${AWS::Partition}:logs:${AWS::Region}:${AWS::AccountId}:log-group:/aws/lambda/video-broadcast-dev-get-upload-policy:*"
                           },
                           {
                             "Fn::Sub": "arn:${AWS::Partition}:logs:${AWS::Region}:${AWS::AccountId}:log-group:/aws/lambda/video-broadcast-dev-push-transcoded-url-to-db:*"
                           },
                           {
                             "Fn::Sub": "arn:${AWS::Partition}:logs:${AWS::Region}:${AWS::AccountId}:log-group:/aws/lambda/video-broadcast-dev-get-all-videos:*"
+                          },
+                          {
+                            "Fn::Sub": "arn:${AWS::Partition}:logs:${AWS::Region}:${AWS::AccountId}:log-group:/aws/lambda/video-broadcast-dev-push-user-votes:*"
                           }
                         ]
                       },
@@ -171,22 +153,16 @@
                         ],
                         "Resource": [
                           {
-                            "Fn::Sub": "arn:${AWS::Partition}:logs:${AWS::Region}:${AWS::AccountId}:log-group:/aws/lambda/video-broadcast-dev-get-user-profile:*:*"
-                          },
-                          {
-                            "Fn::Sub": "arn:${AWS::Partition}:logs:${AWS::Region}:${AWS::AccountId}:log-group:/aws/lambda/video-broadcast-dev-custom-authorizer:*:*"
-                          },
-                          {
                             "Fn::Sub": "arn:${AWS::Partition}:logs:${AWS::Region}:${AWS::AccountId}:log-group:/aws/lambda/video-broadcast-dev-transcode-video:*:*"
-                          },
-                          {
-                            "Fn::Sub": "arn:${AWS::Partition}:logs:${AWS::Region}:${AWS::AccountId}:log-group:/aws/lambda/video-broadcast-dev-get-upload-policy:*:*"
                           },
                           {
                             "Fn::Sub": "arn:${AWS::Partition}:logs:${AWS::Region}:${AWS::AccountId}:log-group:/aws/lambda/video-broadcast-dev-push-transcoded-url-to-db:*:*"
                           },
                           {
                             "Fn::Sub": "arn:${AWS::Partition}:logs:${AWS::Region}:${AWS::AccountId}:log-group:/aws/lambda/video-broadcast-dev-get-all-videos:*:*"
+                          },
+                          {
+                            "Fn::Sub": "arn:${AWS::Partition}:logs:${AWS::Region}:${AWS::AccountId}:log-group:/aws/lambda/video-broadcast-dev-push-user-votes:*:*"
                           }
                         ]
                       },
@@ -201,24 +177,6 @@
                       },
                       {
                         "$ref": "$[\"service\"][\"provider\"][\"iamRoleStatements\"][3]"
-                      },
-                      {
-                        "Effect": "Allow",
-                        "Action": [
-                          "sns:Publish"
-                        ],
-                        "Resource": [
-                          "arn:aws:sns:ap-northeast-1:373534280245:prod-alert"
-                        ]
-                      },
-                      {
-                        "Effect": "Allow",
-                        "Action": [
-                          "sns:Publish"
-                        ],
-                        "Resource": [
-                          "arn:aws:sns:ap-northeast-1:373534280245:prod-alert"
-                        ]
                       },
                       {
                         "Effect": "Allow",
@@ -274,94 +232,6 @@
               }
             }
           },
-          "GetDashuserDashprofileLambdaFunction": {
-            "Type": "AWS::Lambda::Function",
-            "Properties": {
-              "Code": {
-                "S3Bucket": {
-                  "Ref": "ServerlessDeploymentBucket"
-                },
-                "S3Key": "serverless/video-broadcast/dev/1537114154231-2018-09-16T16:09:14.231Z/video-broadcast.zip"
-              },
-              "FunctionName": "video-broadcast-dev-get-user-profile",
-              "Handler": "user-profile/index.handler",
-              "MemorySize": 512,
-              "Role": {
-                "Fn::GetAtt": [
-                  "IamRoleLambdaExecution",
-                  "Arn"
-                ]
-              },
-              "Runtime": "nodejs8.10",
-              "Timeout": 30,
-              "DeadLetterConfig": {
-                "TargetArn": "arn:aws:sns:ap-northeast-1:373534280245:prod-alert"
-              },
-              "Environment": {
-                "Variables": {
-                  "AUTH0_DOMAIN": "harold-mb.auth0.com"
-                }
-              }
-            },
-            "DependsOn": [
-              "GetDashuserDashprofileLogGroup",
-              "IamRoleLambdaExecution"
-            ]
-          },
-          "GetDashuserDashprofileLambdaVersionxuaf6mq9NamLOVfA1WL1nxRe2PFE7ciWpMML6rW1Y": {
-            "Type": "AWS::Lambda::Version",
-            "DeletionPolicy": "Retain",
-            "Properties": {
-              "FunctionName": {
-                "Ref": "GetDashuserDashprofileLambdaFunction"
-              },
-              "CodeSha256": "ev0KxP49CZcXql8qB/3h0gI4SxvWPCZwePPK2sM88z4="
-            }
-          },
-          "CustomDashauthorizerLambdaFunction": {
-            "Type": "AWS::Lambda::Function",
-            "Properties": {
-              "Code": {
-                "S3Bucket": {
-                  "Ref": "ServerlessDeploymentBucket"
-                },
-                "S3Key": "serverless/video-broadcast/dev/1537114154231-2018-09-16T16:09:14.231Z/video-broadcast.zip"
-              },
-              "FunctionName": "video-broadcast-dev-custom-authorizer",
-              "Handler": "custom-authorizer/index.handler",
-              "MemorySize": 512,
-              "Role": {
-                "Fn::GetAtt": [
-                  "IamRoleLambdaExecution",
-                  "Arn"
-                ]
-              },
-              "Runtime": "nodejs8.10",
-              "Timeout": 30,
-              "DeadLetterConfig": {
-                "TargetArn": "arn:aws:sns:ap-northeast-1:373534280245:prod-alert"
-              },
-              "Environment": {
-                "Variables": {
-                  "AUTH0_DOMAIN": "harold-mb.auth0.com"
-                }
-              }
-            },
-            "DependsOn": [
-              "CustomDashauthorizerLogGroup",
-              "IamRoleLambdaExecution"
-            ]
-          },
-          "CustomDashauthorizerLambdaVersionogDLPb19Er0UXWtzCjNoBNmliWbmAnnyRcJnuzAj87g": {
-            "Type": "AWS::Lambda::Version",
-            "DeletionPolicy": "Retain",
-            "Properties": {
-              "FunctionName": {
-                "Ref": "CustomDashauthorizerLambdaFunction"
-              },
-              "CodeSha256": "ev0KxP49CZcXql8qB/3h0gI4SxvWPCZwePPK2sM88z4="
-            }
-          },
           "TranscodeDashvideoLambdaFunction": {
             "Type": "AWS::Lambda::Function",
             "Properties": {
@@ -369,7 +239,7 @@
                 "S3Bucket": {
                   "Ref": "ServerlessDeploymentBucket"
                 },
-                "S3Key": "serverless/video-broadcast/dev/1537114154231-2018-09-16T16:09:14.231Z/video-broadcast.zip"
+                "S3Key": "serverless/video-broadcast/dev/1537289174037-2018-09-18T16:46:14.037Z/video-broadcast.zip"
               },
               "FunctionName": "video-broadcast-dev-transcode-video",
               "Handler": "transcode-video/index.handler",
@@ -397,61 +267,14 @@
               "IamRoleLambdaExecution"
             ]
           },
-          "TranscodeDashvideoLambdaVersionNhuhwxLXzFknVrbZWjniNNYRk61jxO3vIZ41FEaIrs": {
+          "TranscodeDashvideoLambdaVersion8VPMohfbyGjiV5Q6xO3QOmNbdc7caNviQ94FZ8rk": {
             "Type": "AWS::Lambda::Version",
             "DeletionPolicy": "Retain",
             "Properties": {
               "FunctionName": {
                 "Ref": "TranscodeDashvideoLambdaFunction"
               },
-              "CodeSha256": "ev0KxP49CZcXql8qB/3h0gI4SxvWPCZwePPK2sM88z4="
-            }
-          },
-          "GetDashuploadDashpolicyLambdaFunction": {
-            "Type": "AWS::Lambda::Function",
-            "Properties": {
-              "Code": {
-                "S3Bucket": {
-                  "Ref": "ServerlessDeploymentBucket"
-                },
-                "S3Key": "serverless/video-broadcast/dev/1537114154231-2018-09-16T16:09:14.231Z/video-broadcast.zip"
-              },
-              "FunctionName": "video-broadcast-dev-get-upload-policy",
-              "Handler": "create-s3-upload-policy-document/index.handler",
-              "MemorySize": 512,
-              "Role": {
-                "Fn::GetAtt": [
-                  "IamRoleLambdaExecution",
-                  "Arn"
-                ]
-              },
-              "Runtime": "nodejs8.10",
-              "Timeout": 30,
-              "DeadLetterConfig": {
-                "TargetArn": "arn:aws:sns:ap-northeast-1:373534280245:prod-alert"
-              },
-              "Environment": {
-                "Variables": {
-                  "ACCESS_KEY_ID": "AKIAI5L5AC35GAYKC43Q",
-                  "SECRET_ACCESS_KEY": "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",
-                  "UPLOAD_BUCKET": "video-upload-qejsadfqwefadfafqwef-dev",
-                  "UPLOAD_URI": "https://s3.amazonaws.com"
-                }
-              }
-            },
-            "DependsOn": [
-              "GetDashuploadDashpolicyLogGroup",
-              "IamRoleLambdaExecution"
-            ]
-          },
-          "GetDashuploadDashpolicyLambdaVersionrShTEnvNYAPyxBefQkMgsSLM7qedttbcSLYxzmLDMMM": {
-            "Type": "AWS::Lambda::Version",
-            "DeletionPolicy": "Retain",
-            "Properties": {
-              "FunctionName": {
-                "Ref": "GetDashuploadDashpolicyLambdaFunction"
-              },
-              "CodeSha256": "ev0KxP49CZcXql8qB/3h0gI4SxvWPCZwePPK2sM88z4="
+              "CodeSha256": "IqoeBC+pPhngrdqAGuSM2S0NZhI+S9w3vcJ29BOtE/Q="
             }
           },
           "PushDashtranscodedDashurlDashtoDashdbLambdaFunction": {
@@ -461,7 +284,7 @@
                 "S3Bucket": {
                   "Ref": "ServerlessDeploymentBucket"
                 },
-                "S3Key": "serverless/video-broadcast/dev/1537114154231-2018-09-16T16:09:14.231Z/video-broadcast.zip"
+                "S3Key": "serverless/video-broadcast/dev/1537289174037-2018-09-18T16:46:14.037Z/video-broadcast.zip"
               },
               "FunctionName": "video-broadcast-dev-push-transcoded-url-to-db",
               "Handler": "push-transcoded-url-to-db/index.handler",
@@ -488,14 +311,14 @@
               "IamRoleLambdaExecution"
             ]
           },
-          "PushDashtranscodedDashurlDashtoDashdbLambdaVersionT9pwjpjBtgnlTO6OxvfGYbuFPBaqVCbNUJSxG1XOO5E": {
+          "PushDashtranscodedDashurlDashtoDashdbLambdaVersiong8oD3MJUrz3sRlLH5FOlSZeC5EC3H11NYf6pCMJe94": {
             "Type": "AWS::Lambda::Version",
             "DeletionPolicy": "Retain",
             "Properties": {
               "FunctionName": {
                 "Ref": "PushDashtranscodedDashurlDashtoDashdbLambdaFunction"
               },
-              "CodeSha256": "ev0KxP49CZcXql8qB/3h0gI4SxvWPCZwePPK2sM88z4="
+              "CodeSha256": "IqoeBC+pPhngrdqAGuSM2S0NZhI+S9w3vcJ29BOtE/Q="
             }
           },
           "GetDashallDashvideosLambdaFunction": {
@@ -505,7 +328,7 @@
                 "S3Bucket": {
                   "Ref": "ServerlessDeploymentBucket"
                 },
-                "S3Key": "serverless/video-broadcast/dev/1537114154231-2018-09-16T16:09:14.231Z/video-broadcast.zip"
+                "S3Key": "serverless/video-broadcast/dev/1537289174037-2018-09-18T16:46:14.037Z/video-broadcast.zip"
               },
               "FunctionName": "video-broadcast-dev-get-all-videos",
               "Handler": "get-all-videos/index.handler",
@@ -527,14 +350,53 @@
               "IamRoleLambdaExecution"
             ]
           },
-          "GetDashallDashvideosLambdaVersionuYEdWu0qkRgeM5lryPzG10viFal41ozFQxz206nw": {
+          "GetDashallDashvideosLambdaVersionRAHrcLURlRVTDzbI5VYSGJXlgVkiF2mkkx00LKdhxiE": {
             "Type": "AWS::Lambda::Version",
             "DeletionPolicy": "Retain",
             "Properties": {
               "FunctionName": {
                 "Ref": "GetDashallDashvideosLambdaFunction"
               },
-              "CodeSha256": "ev0KxP49CZcXql8qB/3h0gI4SxvWPCZwePPK2sM88z4="
+              "CodeSha256": "IqoeBC+pPhngrdqAGuSM2S0NZhI+S9w3vcJ29BOtE/Q="
+            }
+          },
+          "PushDashuserDashvotesLambdaFunction": {
+            "Type": "AWS::Lambda::Function",
+            "Properties": {
+              "Code": {
+                "S3Bucket": {
+                  "Ref": "ServerlessDeploymentBucket"
+                },
+                "S3Key": "serverless/video-broadcast/dev/1537289174037-2018-09-18T16:46:14.037Z/video-broadcast.zip"
+              },
+              "FunctionName": "video-broadcast-dev-push-user-votes",
+              "Handler": "push-user-votes/index.handler",
+              "MemorySize": 512,
+              "Role": {
+                "Fn::GetAtt": [
+                  "IamRoleLambdaExecution",
+                  "Arn"
+                ]
+              },
+              "Runtime": "nodejs8.10",
+              "Timeout": 30,
+              "DeadLetterConfig": {
+                "TargetArn": "arn:aws:sns:ap-northeast-1:373534280245:prod-alert"
+              }
+            },
+            "DependsOn": [
+              "PushDashuserDashvotesLogGroup",
+              "IamRoleLambdaExecution"
+            ]
+          },
+          "PushDashuserDashvotesLambdaVersionpEl5YczieaOo2iYeN9YAYiLVJxoq4xRAKp9nRVAiRhw": {
+            "Type": "AWS::Lambda::Version",
+            "DeletionPolicy": "Retain",
+            "Properties": {
+              "FunctionName": {
+                "Ref": "PushDashuserDashvotesLambdaFunction"
+              },
+              "CodeSha256": "IqoeBC+pPhngrdqAGuSM2S0NZhI+S9w3vcJ29BOtE/Q="
             }
           },
           "ApiGatewayRestApi": {
@@ -545,36 +407,6 @@
                 "Types": [
                   "EDGE"
                 ]
-              }
-            }
-          },
-          "ApiGatewayResourceUserDashprofile": {
-            "Type": "AWS::ApiGateway::Resource",
-            "Properties": {
-              "ParentId": {
-                "Fn::GetAtt": [
-                  "ApiGatewayRestApi",
-                  "RootResourceId"
-                ]
-              },
-              "PathPart": "user-profile",
-              "RestApiId": {
-                "Ref": "ApiGatewayRestApi"
-              }
-            }
-          },
-          "ApiGatewayResourceS3DashpolicyDashdocument": {
-            "Type": "AWS::ApiGateway::Resource",
-            "Properties": {
-              "ParentId": {
-                "Fn::GetAtt": [
-                  "ApiGatewayRestApi",
-                  "RootResourceId"
-                ]
-              },
-              "PathPart": "s3-policy-document",
-              "RestApiId": {
-                "Ref": "ApiGatewayRestApi"
               }
             }
           },
@@ -593,95 +425,16 @@
               }
             }
           },
-          "ApiGatewayMethodUserDashprofileOptions": {
-            "Type": "AWS::ApiGateway::Method",
+          "ApiGatewayResourcePushDashvotes": {
+            "Type": "AWS::ApiGateway::Resource",
             "Properties": {
-              "AuthorizationType": "NONE",
-              "HttpMethod": "OPTIONS",
-              "MethodResponses": [
-                {
-                  "StatusCode": "200",
-                  "ResponseParameters": {
-                    "method.response.header.Access-Control-Allow-Origin": true,
-                    "method.response.header.Access-Control-Allow-Headers": true,
-                    "method.response.header.Access-Control-Allow-Methods": true,
-                    "method.response.header.Access-Control-Allow-Credentials": true
-                  },
-                  "ResponseModels": {}
-                }
-              ],
-              "RequestParameters": {},
-              "Integration": {
-                "Type": "MOCK",
-                "RequestTemplates": {
-                  "application/json": "{statusCode:200}"
-                },
-                "ContentHandling": "CONVERT_TO_TEXT",
-                "IntegrationResponses": [
-                  {
-                    "StatusCode": "200",
-                    "ResponseParameters": {
-                      "method.response.header.Access-Control-Allow-Origin": "'*'",
-                      "method.response.header.Access-Control-Allow-Headers": "'Content-Type,X-Amz-Date,Authorization,X-Api-Key,X-Amz-Security-Token,X-Amz-User-Agent'",
-                      "method.response.header.Access-Control-Allow-Methods": "'OPTIONS,GET'",
-                      "method.response.header.Access-Control-Allow-Credentials": "'false'"
-                    },
-                    "ResponseTemplates": {
-                      "application/json": ""
-                    }
-                  }
+              "ParentId": {
+                "Fn::GetAtt": [
+                  "ApiGatewayRestApi",
+                  "RootResourceId"
                 ]
               },
-              "ResourceId": {
-                "Ref": "ApiGatewayResourceUserDashprofile"
-              },
-              "RestApiId": {
-                "Ref": "ApiGatewayRestApi"
-              }
-            }
-          },
-          "ApiGatewayMethodS3DashpolicyDashdocumentOptions": {
-            "Type": "AWS::ApiGateway::Method",
-            "Properties": {
-              "AuthorizationType": "NONE",
-              "HttpMethod": "OPTIONS",
-              "MethodResponses": [
-                {
-                  "StatusCode": "200",
-                  "ResponseParameters": {
-                    "method.response.header.Access-Control-Allow-Origin": true,
-                    "method.response.header.Access-Control-Allow-Headers": true,
-                    "method.response.header.Access-Control-Allow-Methods": true,
-                    "method.response.header.Access-Control-Allow-Credentials": true
-                  },
-                  "ResponseModels": {}
-                }
-              ],
-              "RequestParameters": {},
-              "Integration": {
-                "Type": "MOCK",
-                "RequestTemplates": {
-                  "application/json": "{statusCode:200}"
-                },
-                "ContentHandling": "CONVERT_TO_TEXT",
-                "IntegrationResponses": [
-                  {
-                    "StatusCode": "200",
-                    "ResponseParameters": {
-                      "method.response.header.Access-Control-Allow-Origin": "'*'",
-                      "method.response.header.Access-Control-Allow-Headers": "'Content-Type,X-Amz-Date,Authorization,X-Api-Key,X-Amz-Security-Token,X-Amz-User-Agent'",
-                      "method.response.header.Access-Control-Allow-Methods": "'OPTIONS,GET'",
-                      "method.response.header.Access-Control-Allow-Credentials": "'false'"
-                    },
-                    "ResponseTemplates": {
-                      "application/json": ""
-                    }
-                  }
-                ]
-              },
-              "ResourceId": {
-                "Ref": "ApiGatewayResourceS3DashpolicyDashdocument"
-              },
+              "PathPart": "push-votes",
               "RestApiId": {
                 "Ref": "ApiGatewayRestApi"
               }
@@ -734,105 +487,52 @@
               }
             }
           },
-          "ApiGatewayMethodUserDashprofileGet": {
+          "ApiGatewayMethodPushDashvotesOptions": {
             "Type": "AWS::ApiGateway::Method",
             "Properties": {
-              "HttpMethod": "GET",
-              "RequestParameters": {
-                "method.request.querystring.accessToken": false,
-                "method.request.header.Authorization": false
+              "AuthorizationType": "NONE",
+              "HttpMethod": "OPTIONS",
+              "MethodResponses": [
+                {
+                  "StatusCode": "200",
+                  "ResponseParameters": {
+                    "method.response.header.Access-Control-Allow-Origin": true,
+                    "method.response.header.Access-Control-Allow-Headers": true,
+                    "method.response.header.Access-Control-Allow-Methods": true,
+                    "method.response.header.Access-Control-Allow-Credentials": true
+                  },
+                  "ResponseModels": {}
+                }
+              ],
+              "RequestParameters": {},
+              "Integration": {
+                "Type": "MOCK",
+                "RequestTemplates": {
+                  "application/json": "{statusCode:200}"
+                },
+                "ContentHandling": "CONVERT_TO_TEXT",
+                "IntegrationResponses": [
+                  {
+                    "StatusCode": "200",
+                    "ResponseParameters": {
+                      "method.response.header.Access-Control-Allow-Origin": "'*'",
+                      "method.response.header.Access-Control-Allow-Headers": "'Content-Type,X-Amz-Date,Authorization,X-Api-Key,X-Amz-Security-Token,X-Amz-User-Agent'",
+                      "method.response.header.Access-Control-Allow-Methods": "'OPTIONS,POST'",
+                      "method.response.header.Access-Control-Allow-Credentials": "'false'"
+                    },
+                    "ResponseTemplates": {
+                      "application/json": ""
+                    }
+                  }
+                ]
               },
               "ResourceId": {
-                "Ref": "ApiGatewayResourceUserDashprofile"
+                "Ref": "ApiGatewayResourcePushDashvotes"
               },
               "RestApiId": {
                 "Ref": "ApiGatewayRestApi"
-              },
-              "ApiKeyRequired": false,
-              "AuthorizationType": "CUSTOM",
-              "AuthorizerId": {
-                "Ref": "CustomDashauthorizerApiGatewayAuthorizer"
-              },
-              "Integration": {
-                "IntegrationHttpMethod": "POST",
-                "Type": "AWS_PROXY",
-                "Uri": {
-                  "Fn::Join": [
-                    "",
-                    [
-                      "arn:",
-                      {
-                        "Ref": "AWS::Partition"
-                      },
-                      ":apigateway:",
-                      {
-                        "Ref": "AWS::Region"
-                      },
-                      ":lambda:path/2015-03-31/functions/",
-                      {
-                        "Fn::GetAtt": [
-                          "GetDashuserDashprofileLambdaFunction",
-                          "Arn"
-                        ]
-                      },
-                      "/invocations"
-                    ]
-                  ]
-                }
-              },
-              "MethodResponses": []
-            },
-            "DependsOn": "CustomDashauthorizerApiGatewayAuthorizer"
-          },
-          "ApiGatewayMethodS3DashpolicyDashdocumentGet": {
-            "Type": "AWS::ApiGateway::Method",
-            "Properties": {
-              "HttpMethod": "GET",
-              "RequestParameters": {
-                "method.request.querystring.accessToken": false,
-                "method.request.header.Authorization": false
-              },
-              "ResourceId": {
-                "Ref": "ApiGatewayResourceS3DashpolicyDashdocument"
-              },
-              "RestApiId": {
-                "Ref": "ApiGatewayRestApi"
-              },
-              "ApiKeyRequired": false,
-              "AuthorizationType": "CUSTOM",
-              "AuthorizerId": {
-                "Ref": "CustomDashauthorizerApiGatewayAuthorizer"
-              },
-              "Integration": {
-                "IntegrationHttpMethod": "POST",
-                "Type": "AWS_PROXY",
-                "Uri": {
-                  "Fn::Join": [
-                    "",
-                    [
-                      "arn:",
-                      {
-                        "Ref": "AWS::Partition"
-                      },
-                      ":apigateway:",
-                      {
-                        "Ref": "AWS::Region"
-                      },
-                      ":lambda:path/2015-03-31/functions/",
-                      {
-                        "Fn::GetAtt": [
-                          "GetDashuploadDashpolicyLambdaFunction",
-                          "Arn"
-                        ]
-                      },
-                      "/invocations"
-                    ]
-                  ]
-                }
-              },
-              "MethodResponses": []
-            },
-            "DependsOn": "CustomDashauthorizerApiGatewayAuthorizer"
+              }
+            }
           },
           "ApiGatewayMethodAllDashvideosGet": {
             "Type": "AWS::ApiGateway::Method",
@@ -849,10 +549,7 @@
                 "Ref": "ApiGatewayRestApi"
               },
               "ApiKeyRequired": false,
-              "AuthorizationType": "CUSTOM",
-              "AuthorizerId": {
-                "Ref": "CustomDashauthorizerApiGatewayAuthorizer"
-              },
+              "AuthorizationType": "NONE",
               "Integration": {
                 "IntegrationHttpMethod": "POST",
                 "Type": "AWS_PROXY",
@@ -881,45 +578,55 @@
                 }
               },
               "MethodResponses": []
-            },
-            "DependsOn": "CustomDashauthorizerApiGatewayAuthorizer"
+            }
           },
-          "CustomDashauthorizerApiGatewayAuthorizer": {
-            "Type": "AWS::ApiGateway::Authorizer",
+          "ApiGatewayMethodPushDashvotesPost": {
+            "Type": "AWS::ApiGateway::Method",
             "Properties": {
-              "AuthorizerResultTtlInSeconds": 300,
-              "IdentitySource": "method.request.header.Authorization",
-              "Name": "custom-authorizer",
+              "HttpMethod": "POST",
+              "RequestParameters": {
+                "method.request.querystring.accessToken": false,
+                "method.request.header.Authorization": false
+              },
+              "ResourceId": {
+                "Ref": "ApiGatewayResourcePushDashvotes"
+              },
               "RestApiId": {
                 "Ref": "ApiGatewayRestApi"
               },
-              "AuthorizerUri": {
-                "Fn::Join": [
-                  "",
-                  [
-                    "arn:",
-                    {
-                      "Ref": "AWS::Partition"
-                    },
-                    ":apigateway:",
-                    {
-                      "Ref": "AWS::Region"
-                    },
-                    ":lambda:path/2015-03-31/functions/",
-                    {
-                      "Fn::GetAtt": [
-                        "CustomDashauthorizerLambdaFunction",
-                        "Arn"
-                      ]
-                    },
-                    "/invocations"
+              "ApiKeyRequired": false,
+              "AuthorizationType": "NONE",
+              "Integration": {
+                "IntegrationHttpMethod": "POST",
+                "Type": "AWS_PROXY",
+                "Uri": {
+                  "Fn::Join": [
+                    "",
+                    [
+                      "arn:",
+                      {
+                        "Ref": "AWS::Partition"
+                      },
+                      ":apigateway:",
+                      {
+                        "Ref": "AWS::Region"
+                      },
+                      ":lambda:path/2015-03-31/functions/",
+                      {
+                        "Fn::GetAtt": [
+                          "PushDashuserDashvotesLambdaFunction",
+                          "Arn"
+                        ]
+                      },
+                      "/invocations"
+                    ]
                   ]
-                ]
+                }
               },
-              "Type": "TOKEN"
+              "MethodResponses": []
             }
           },
-          "ApiGatewayDeployment1537114154653": {
+          "ApiGatewayDeployment1537289174318": {
             "Type": "AWS::ApiGateway::Deployment",
             "Properties": {
               "RestApiId": {
@@ -928,127 +635,9 @@
               "StageName": "dev"
             },
             "DependsOn": [
-              "ApiGatewayMethodUserDashprofileGet",
-              "ApiGatewayMethodS3DashpolicyDashdocumentGet",
-              "ApiGatewayMethodAllDashvideosGet"
+              "ApiGatewayMethodAllDashvideosGet",
+              "ApiGatewayMethodPushDashvotesPost"
             ]
-          },
-          "GetDashuserDashprofileLambdaPermissionApiGateway": {
-            "Type": "AWS::Lambda::Permission",
-            "Properties": {
-              "FunctionName": {
-                "Fn::GetAtt": [
-                  "GetDashuserDashprofileLambdaFunction",
-                  "Arn"
-                ]
-              },
-              "Action": "lambda:InvokeFunction",
-              "Principal": {
-                "Fn::Join": [
-                  "",
-                  [
-                    "apigateway.",
-                    {
-                      "Ref": "AWS::URLSuffix"
-                    }
-                  ]
-                ]
-              },
-              "SourceArn": {
-                "Fn::Join": [
-                  "",
-                  [
-                    "arn:",
-                    {
-                      "Ref": "AWS::Partition"
-                    },
-                    ":execute-api:",
-                    {
-                      "Ref": "AWS::Region"
-                    },
-                    ":",
-                    {
-                      "Ref": "AWS::AccountId"
-                    },
-                    ":",
-                    {
-                      "Ref": "ApiGatewayRestApi"
-                    },
-                    "/*/*"
-                  ]
-                ]
-              }
-            }
-          },
-          "CustomDashauthorizerLambdaPermissionApiGateway": {
-            "Type": "AWS::Lambda::Permission",
-            "Properties": {
-              "FunctionName": {
-                "Fn::GetAtt": [
-                  "CustomDashauthorizerLambdaFunction",
-                  "Arn"
-                ]
-              },
-              "Action": "lambda:InvokeFunction",
-              "Principal": {
-                "Fn::Join": [
-                  "",
-                  [
-                    "apigateway.",
-                    {
-                      "Ref": "AWS::URLSuffix"
-                    }
-                  ]
-                ]
-              }
-            }
-          },
-          "GetDashuploadDashpolicyLambdaPermissionApiGateway": {
-            "Type": "AWS::Lambda::Permission",
-            "Properties": {
-              "FunctionName": {
-                "Fn::GetAtt": [
-                  "GetDashuploadDashpolicyLambdaFunction",
-                  "Arn"
-                ]
-              },
-              "Action": "lambda:InvokeFunction",
-              "Principal": {
-                "Fn::Join": [
-                  "",
-                  [
-                    "apigateway.",
-                    {
-                      "Ref": "AWS::URLSuffix"
-                    }
-                  ]
-                ]
-              },
-              "SourceArn": {
-                "Fn::Join": [
-                  "",
-                  [
-                    "arn:",
-                    {
-                      "Ref": "AWS::Partition"
-                    },
-                    ":execute-api:",
-                    {
-                      "Ref": "AWS::Region"
-                    },
-                    ":",
-                    {
-                      "Ref": "AWS::AccountId"
-                    },
-                    ":",
-                    {
-                      "Ref": "ApiGatewayRestApi"
-                    },
-                    "/*/*"
-                  ]
-                ]
-              }
-            }
           },
           "GetDashallDashvideosLambdaPermissionApiGateway": {
             "Type": "AWS::Lambda::Permission",
@@ -1056,6 +645,53 @@
               "FunctionName": {
                 "Fn::GetAtt": [
                   "GetDashallDashvideosLambdaFunction",
+                  "Arn"
+                ]
+              },
+              "Action": "lambda:InvokeFunction",
+              "Principal": {
+                "Fn::Join": [
+                  "",
+                  [
+                    "apigateway.",
+                    {
+                      "Ref": "AWS::URLSuffix"
+                    }
+                  ]
+                ]
+              },
+              "SourceArn": {
+                "Fn::Join": [
+                  "",
+                  [
+                    "arn:",
+                    {
+                      "Ref": "AWS::Partition"
+                    },
+                    ":execute-api:",
+                    {
+                      "Ref": "AWS::Region"
+                    },
+                    ":",
+                    {
+                      "Ref": "AWS::AccountId"
+                    },
+                    ":",
+                    {
+                      "Ref": "ApiGatewayRestApi"
+                    },
+                    "/*/*"
+                  ]
+                ]
+              }
+            }
+          },
+          "PushDashuserDashvotesLambdaPermissionApiGateway": {
+            "Type": "AWS::Lambda::Permission",
+            "Properties": {
+              "FunctionName": {
+                "Fn::GetAtt": [
+                  "PushDashuserDashvotesLambdaFunction",
                   "Arn"
                 ]
               },
@@ -1160,40 +796,28 @@
               "Ref": "ServerlessDeploymentBucket"
             }
           },
-          "GetDashuserDashprofileLambdaFunctionQualifiedArn": {
-            "Description": "Current Lambda function version",
-            "Value": {
-              "Ref": "GetDashuserDashprofileLambdaVersionxuaf6mq9NamLOVfA1WL1nxRe2PFE7ciWpMML6rW1Y"
-            }
-          },
-          "CustomDashauthorizerLambdaFunctionQualifiedArn": {
-            "Description": "Current Lambda function version",
-            "Value": {
-              "Ref": "CustomDashauthorizerLambdaVersionogDLPb19Er0UXWtzCjNoBNmliWbmAnnyRcJnuzAj87g"
-            }
-          },
           "TranscodeDashvideoLambdaFunctionQualifiedArn": {
             "Description": "Current Lambda function version",
             "Value": {
-              "Ref": "TranscodeDashvideoLambdaVersionNhuhwxLXzFknVrbZWjniNNYRk61jxO3vIZ41FEaIrs"
-            }
-          },
-          "GetDashuploadDashpolicyLambdaFunctionQualifiedArn": {
-            "Description": "Current Lambda function version",
-            "Value": {
-              "Ref": "GetDashuploadDashpolicyLambdaVersionrShTEnvNYAPyxBefQkMgsSLM7qedttbcSLYxzmLDMMM"
+              "Ref": "TranscodeDashvideoLambdaVersion8VPMohfbyGjiV5Q6xO3QOmNbdc7caNviQ94FZ8rk"
             }
           },
           "PushDashtranscodedDashurlDashtoDashdbLambdaFunctionQualifiedArn": {
             "Description": "Current Lambda function version",
             "Value": {
-              "Ref": "PushDashtranscodedDashurlDashtoDashdbLambdaVersionT9pwjpjBtgnlTO6OxvfGYbuFPBaqVCbNUJSxG1XOO5E"
+              "Ref": "PushDashtranscodedDashurlDashtoDashdbLambdaVersiong8oD3MJUrz3sRlLH5FOlSZeC5EC3H11NYf6pCMJe94"
             }
           },
           "GetDashallDashvideosLambdaFunctionQualifiedArn": {
             "Description": "Current Lambda function version",
             "Value": {
-              "Ref": "GetDashallDashvideosLambdaVersionuYEdWu0qkRgeM5lryPzG10viFal41ozFQxz206nw"
+              "Ref": "GetDashallDashvideosLambdaVersionRAHrcLURlRVTDzbI5VYSGJXlgVkiF2mkkx00LKdhxiE"
+            }
+          },
+          "PushDashuserDashvotesLambdaFunctionQualifiedArn": {
+            "Description": "Current Lambda function version",
+            "Value": {
+              "Ref": "PushDashuserDashvotesLambdaVersionpEl5YczieaOo2iYeN9YAYiLVJxoq4xRAKp9nRVAiRhw"
             }
           },
           "ServiceEndpoint": {
@@ -1246,79 +870,6 @@
     },
     "pluginsData": {},
     "functions": {
-      "get-user-profile": {
-        "handler": "user-profile/index.handler",
-        "onError": "arn:aws:sns:ap-northeast-1:373534280245:prod-alert",
-        "events": [
-          {
-            "http": {
-              "path": "user-profile",
-              "method": "get",
-              "cors": {
-                "origins": [
-                  "*"
-                ],
-                "origin": "*",
-                "methods": [
-                  "OPTIONS",
-                  "GET"
-                ],
-                "headers": [
-                  "Content-Type",
-                  "X-Amz-Date",
-                  "Authorization",
-                  "X-Api-Key",
-                  "X-Amz-Security-Token",
-                  "X-Amz-User-Agent"
-                ],
-                "allowCredentials": false
-              },
-              "request": {
-                "parameters": {
-                  "method.request.querystring.accessToken": false,
-                  "method.request.header.Authorization": false
-                }
-              },
-              "authorizer": {
-                "name": "custom-authorizer",
-                "arn": {
-                  "Fn::GetAtt": [
-                    "CustomDashauthorizerLambdaFunction",
-                    "Arn"
-                  ]
-                },
-                "resultTtlInSeconds": 300,
-                "identitySource": "method.request.header.Authorization",
-                "claims": []
-              },
-              "integration": "AWS_PROXY"
-            }
-          }
-        ],
-        "environment": {
-          "AUTH0_DOMAIN": "harold-mb.auth0.com"
-        },
-        "name": "video-broadcast-dev-get-user-profile",
-        "package": {},
-        "memory": 512,
-        "timeout": 30,
-        "runtime": "nodejs8.10",
-        "vpc": {}
-      },
-      "custom-authorizer": {
-        "handler": "custom-authorizer/index.handler",
-        "onError": "arn:aws:sns:ap-northeast-1:373534280245:prod-alert",
-        "environment": {
-          "AUTH0_DOMAIN": "harold-mb.auth0.com"
-        },
-        "events": [],
-        "name": "video-broadcast-dev-custom-authorizer",
-        "package": {},
-        "memory": 512,
-        "timeout": 30,
-        "runtime": "nodejs8.10",
-        "vpc": {}
-      },
       "transcode-video": {
         "handler": "transcode-video/index.handler",
         "onError": "arn:aws:sns:ap-northeast-1:373534280245:prod-alert",
@@ -1328,68 +879,6 @@
         },
         "events": [],
         "name": "video-broadcast-dev-transcode-video",
-        "package": {},
-        "memory": 512,
-        "timeout": 30,
-        "runtime": "nodejs8.10",
-        "vpc": {}
-      },
-      "get-upload-policy": {
-        "handler": "create-s3-upload-policy-document/index.handler",
-        "onError": "arn:aws:sns:ap-northeast-1:373534280245:prod-alert",
-        "events": [
-          {
-            "http": {
-              "path": "s3-policy-document",
-              "method": "get",
-              "cors": {
-                "origins": [
-                  "*"
-                ],
-                "origin": "*",
-                "methods": [
-                  "OPTIONS",
-                  "GET"
-                ],
-                "headers": [
-                  "Content-Type",
-                  "X-Amz-Date",
-                  "Authorization",
-                  "X-Api-Key",
-                  "X-Amz-Security-Token",
-                  "X-Amz-User-Agent"
-                ],
-                "allowCredentials": false
-              },
-              "request": {
-                "parameters": {
-                  "method.request.querystring.accessToken": false,
-                  "method.request.header.Authorization": false
-                }
-              },
-              "authorizer": {
-                "name": "custom-authorizer",
-                "arn": {
-                  "Fn::GetAtt": [
-                    "CustomDashauthorizerLambdaFunction",
-                    "Arn"
-                  ]
-                },
-                "resultTtlInSeconds": 300,
-                "identitySource": "method.request.header.Authorization",
-                "claims": []
-              },
-              "integration": "AWS_PROXY"
-            }
-          }
-        ],
-        "environment": {
-          "ACCESS_KEY_ID": "AKIAI5L5AC35GAYKC43Q",
-          "SECRET_ACCESS_KEY": "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",
-          "UPLOAD_BUCKET": "video-upload-qejsadfqwefadfafqwef-dev",
-          "UPLOAD_URI": "https://s3.amazonaws.com"
-        },
-        "name": "video-broadcast-dev-get-upload-policy",
         "package": {},
         "memory": 512,
         "timeout": 30,
@@ -1447,23 +936,55 @@
                   "method.request.header.Authorization": false
                 }
               },
-              "authorizer": {
-                "name": "custom-authorizer",
-                "arn": {
-                  "Fn::GetAtt": [
-                    "CustomDashauthorizerLambdaFunction",
-                    "Arn"
-                  ]
-                },
-                "resultTtlInSeconds": 300,
-                "identitySource": "method.request.header.Authorization",
-                "claims": []
-              },
               "integration": "AWS_PROXY"
             }
           }
         ],
         "name": "video-broadcast-dev-get-all-videos",
+        "package": {},
+        "memory": 512,
+        "timeout": 30,
+        "runtime": "nodejs8.10",
+        "vpc": {}
+      },
+      "push-user-votes": {
+        "handler": "push-user-votes/index.handler",
+        "onError": "arn:aws:sns:ap-northeast-1:373534280245:prod-alert",
+        "events": [
+          {
+            "http": {
+              "path": "push-votes",
+              "method": "post",
+              "cors": {
+                "origins": [
+                  "*"
+                ],
+                "origin": "*",
+                "methods": [
+                  "OPTIONS",
+                  "POST"
+                ],
+                "headers": [
+                  "Content-Type",
+                  "X-Amz-Date",
+                  "Authorization",
+                  "X-Api-Key",
+                  "X-Amz-Security-Token",
+                  "X-Amz-User-Agent"
+                ],
+                "allowCredentials": false
+              },
+              "request": {
+                "parameters": {
+                  "method.request.querystring.accessToken": false,
+                  "method.request.header.Authorization": false
+                }
+              },
+              "integration": "AWS_PROXY"
+            }
+          }
+        ],
+        "name": "video-broadcast-dev-push-user-votes",
         "package": {},
         "memory": 512,
         "timeout": 30,
@@ -1498,7 +1019,7 @@
     "artifact": "/Users/sunhua/Documents/Projects/github.com/bnusunny/serverless-video-broadcast-app/lambda/.serverless/video-broadcast.zip"
   },
   "package": {
-    "artifactDirectoryName": "serverless/video-broadcast/dev/1537114154231-2018-09-16T16:09:14.231Z",
+    "artifactDirectoryName": "serverless/video-broadcast/dev/1537289174037-2018-09-18T16:46:14.037Z",
     "artifact": "video-broadcast.zip"
   }
 }
