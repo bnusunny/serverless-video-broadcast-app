@@ -6,7 +6,7 @@ import VideoPlayer from '@expo/videoplayer';
 
 export default class VideoPlayScreenScreen extends React.Component {
     static navigationOptions = ({ navigation }) => ({
-        header: null,
+        // header: null,
         tabBarVisible:
           navigation.state.params && navigation.state.params.tabBarHidden
             ? false
@@ -52,6 +52,7 @@ export default class VideoPlayScreenScreen extends React.Component {
         return (
             <View style={styles.container}>
                 <VideoPlayer
+                    style={{flex: 1, flexDirection: 'row', backgroundColor: 'blue'}}
                     videoProps={{
                         shouldPlay: true,
                         resizeMode: Video.RESIZE_MODE_CONTAIN,

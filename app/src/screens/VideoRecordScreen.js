@@ -75,8 +75,8 @@ export default class VideoRecordScreen extends React.Component {
                 >
                 <View
                   style={{
-                    flex: 0.5,
-                    backgroundColor: 'white',
+                    flex: 1,
+                    backgroundColor: 'transparent',
                     flexDirection: 'row',
                     alignSelf: 'center',
                     alignItems: 'flex-end',

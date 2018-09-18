@@ -88,7 +88,7 @@ export default class HomeScreen extends React.Component {
                   onPress = {() => this.props.navigation.navigate('VideoPlay', {playlist: item.playlist, video_urls: item.video_urls})} > 
                   <Card image={{ uri: item.thumbnail }} > 
                       <Text style={{color: 'black'}}> {item.userID} </Text>
-                      <Text style={{color: 'blue'}}> {new Date(item.created_at).toLocaleDateString()} </Text>
+                      <Text style={{color: 'blue'}}> {new Date(item.created_at).toLocaleString()} </Text>
                     </Card>
                 </TouchableOpacity>
               )}
